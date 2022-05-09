@@ -8,9 +8,9 @@ Este código de conduta descreve nossas expectativas para todos aqueles que part
 
 Convidamos todos os participantes do Sankhya Developer a nos ajudar a criar experiências seguras e positivas para todos.
 
-## 2. Cidadania [Fonte/Cultura/Tecnologia] Aberta
+## 2. Cidadania [Fonte/Cultura/Tecnologia] Aberta / Open [Source/Culture/Tech] Citizenship
 
-Um objetivo suplementar deste Código de Conduta é aumentar a cidadania aberta [fonte/cultura/tecnologia], incentivando os participantes a reconhecer e fortalecer as relações entre nossas ações e seus efeitos em nossa comunidade.
+Um objetivo suplementar deste Código de Conduta é aumentar a open [source/culture/tech] citizenship, incentivando os participantes a reconhecer e fortalecer as relações entre nossas ações e seus efeitos em nossa comunidade.
 
 As comunidades espelham as sociedades em que existem e uma ação positiva é essencial para combater as muitas formas de desigualdade e abusos de poder que existem na sociedade.
 
