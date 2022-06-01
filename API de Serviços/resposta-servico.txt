@@ -1,0 +1,26 @@
+----Inicio reposta >>>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<serviceResponse pendingPrinting="false" serviceName="CRUDServiceProvider.loadRecords" status="1" transactionId="444dafa9-d499-463f-8e25-9b8fab52e409">
+<responseBody>
+<entities total="1">
+<metadata>
+<fields>
+<field name="CODPARC"/>
+<field name="NOMEPARC"/>
+<field name="Cidade_NOMECID"/>
+<field name="Cidade_UnidadeFederativa_UF"/>
+<field name="Cidade_UnidadeFederativa_DESCRICAO"/>
+</fields>
+</metadata>
+<entity>
+<f0>10293</f0>
+<f1>JOSE DAS COLVES</f1>
+<f2>UBERLANDIA</f2>
+<f3>MG</f3>
+<f4>MINAS GERAIS</f4>
+</entity>
+</entities>
+</responseBody>
+</serviceResponse>
+
+----Fim resposta <<<
