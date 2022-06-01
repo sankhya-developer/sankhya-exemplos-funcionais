@@ -1,0 +1,122 @@
+<gadget>
+  <prompt-parameters>
+    <parameter id="P_PERIODO" description="Período" metadata="datePeriod" required="true" keep-last="true" keep-date="false" order="0"/>
+    <parameter id="P_VENDEDOR" description="Vendedor" metadata="entity:Vendedor@CODVEND" required="false" keep-last="false" keep-date="false" order="1"/>
+    <parameter id="P_EMPRESA" description="Empresa" metadata="multiList:Text" listType="sql" required="false" keep-last="false" keep-date="false" order="2">
+      <expression type="SQL"><![CDATA[SELECT EMP.CODEMP AS VALUE     , EMP.NOMEFANTASIA AS LABEL  FROM TSIEMP EMPORDER BY 2]]></expression>
+    </parameter>
+    <parameter id="P_CONFIR" description="Apenas pedidos confirmados?" metadata="boolean" required="false" keep-last="false" keep-date="false" default="false" order="3"/>
+  </prompt-parameters>
+  <level id="lvl_gu44ie" description="Principal">
+    <simple-value id="svl_gu44if">
+      <expression type="sql" data-source="MGEDS"><![CDATA[SELECT SUM(CAB.VLRNOTA) AS VALOR     , COUNT(CAB.NUNOTA) AS QTD     , SUM(CAB.VLRNOTA)/COUNT(CAB.NUNOTA) AS TICKET  FROM TGFCAB CAB WHERE CAB.TIPMOV = 'P' /*P-Pedido de venda*/   AND CAB.DTNEG BETWEEN :P_PERIODO.INI AND :P_PERIODO.FIN   AND (CAB.CODVEND = :P_VENDEDOR OR :P_VENDEDOR IS NULL)   AND CAB.CODEMP IN :P_EMPRESA   AND (CAB.STATUSNOTA = 'L' OR :P_CONFIR = 'N')]]></expression>
+      <metadata>
+        <field name="VALOR" label="Valor" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+        <field name="QTD" label="Qtd." type="I" visible="true" useFooter="false"/>
+        <field name="TICKET" label="Ticket" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+      </metadata>
+      <value-expression><![CDATA[<div style='text-align: center;'>Período: <span style='color: #0000FF;'>:P_PERIODO.INI até :P_PERIODO.FIN</span>Valor: $VALORQuantidade de Notas: $QTDTicket Médio: $TICKET</div>]]></value-expression>
+    </simple-value>
+    <geochart id="gch_gu44ii">
+      <title><![CDATA[Pedidos de Venda por Região]]></title>
+      <expression type="sql" data-source="MGEDS"><![CDATA[  SELECT SUM(CAB.VLRNOTA) AS VALOR       , UFS.UF       , UFS.DESCRICAO    FROM TGFCAB CAB    JOIN TGFPAR PAR ON CAB.CODPARC = PAR.CODPARC     JOIN TSICID CID ON PAR.CODCID = CID.CODCID    JOIN TSIUFS UFS ON CID.UF = UFS.CODUF   WHERE CAB.TIPMOV = 'P' /*P-Pedido de venda*/     AND CAB.DTNEG BETWEEN :P_PERIODO.INI AND :P_PERIODO.FIN     AND (CAB.CODVEND = :P_VENDEDOR OR :P_VENDEDOR IS NULL)     AND CAB.CODEMP IN :P_EMPRESA     AND (CAB.STATUSNOTA = 'L' OR :P_CONFIR = 'N')GROUP BY UFS.UF       , UFS.DESCRICAO  ]]></expression>
+      <metadata>
+        <field name="VALOR" label="Valor" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+        <field name="UF" label="UF" type="S" visible="true" useFooter="false"/>
+        <field name="DESCRICAO" label="Estado" type="S" visible="true" useFooter="false"/>
+      </metadata>
+      <country>BR</country>
+      <legend show="false" colors="#CC9966,#993300"/>
+      <region-marker>
+        <name>$UF</name>
+        <value>$VALOR</value>
+        <on-click navigate-to="lvl_gu44ir">
+          <param id="A_UF">$UF</param>
+          <param id="A_DESCRICAO">$DESCRICAO</param>
+        </on-click>
+      </region-marker>
+    </geochart>
+    <simple-value id="svl_gu44jg">
+      <value-expression><![CDATA[<span style='color: #0000FF;'><u>Clique aqui para detalhes</u></span>]]></value-expression>
+      <on-click navigate-to="lvl_gu44ir">
+        <param id="A_UF"/>
+        <param id="A_DESCRICAO"/>
+      </on-click>
+    </simple-value>
+  </level>
+  <level id="lvl_gu44ir" description="Nível 2">
+    <args>
+      <arg id="A_UF" type="text"/>
+      <arg id="A_DESCRICAO" type="text"/>
+    </args>
+    <simple-value id="svl_gu44iu">
+      <expression type="sql" data-source="MGEDS"><![CDATA[  SELECT SUM(CAB.VLRNOTA) AS VALOR       , COUNT(CAB.NUNOTA) AS QTD       , SUM(CAB.VLRNOTA)/COUNT(CAB.NUNOTA) AS TICKET    FROM TGFCAB CAB    JOIN TGFPAR PAR ON CAB.CODPARC = PAR.CODPARC     JOIN TSICID CID ON PAR.CODCID = CID.CODCID    JOIN TSIUFS UFS ON CID.UF = UFS.CODUF   WHERE CAB.TIPMOV = 'P' /*P-Pedido de venda*/     AND CAB.DTNEG BETWEEN :P_PERIODO.INI AND :P_PERIODO.FIN     AND (CAB.CODVEND = :P_VENDEDOR OR :P_VENDEDOR IS NULL)     AND CAB.CODEMP IN :P_EMPRESA     AND (CAB.STATUSNOTA = 'L' OR :P_CONFIR = 'N')     AND (UFS.UF = :A_UF OR :A_UF IS NULL)]]></expression>
+      <metadata>
+        <field name="VALOR" label="Valor" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+        <field name="QTD" label="Quantidade" type="I" visible="true" useFooter="false"/>
+        <field name="TICKET" label="Ticket" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+      </metadata>
+      <value-expression><![CDATA[<div style='text-align: center;'>Período: <span style='color: #0000FF;'>:P_PERIODO.INI até :P_PERIODO.FIN</span>Valor: $VALORQuantidade de Notas: $QTDTicket Médio: $TICKET<span style='color: #CC3300;'>:A_UF - :A_DESCRICAO</span></div>]]></value-expression>
+    </simple-value>
+    <chart id="cht_gu44i1" type="column" nroColuna="6">
+      <title><![CDATA[Ticket Médio por Vendedor]]></title>
+      <expression type="sql" data-source="MGEDS"><![CDATA[  SELECT SUM(CAB.VLRNOTA) AS VALOR       , COUNT(CAB.NUNOTA) AS QTD       , SUM(CAB.VLRNOTA)/COUNT(CAB.NUNOTA) AS TICKET       , VEN.CODVEND       , VEN.APELIDO    FROM TGFCAB CAB    JOIN TGFPAR PAR ON CAB.CODPARC = PAR.CODPARC     JOIN TSICID CID ON PAR.CODCID = CID.CODCID    JOIN TSIUFS UFS ON CID.UF = UFS.CODUF    JOIN TSIEMP EMP ON CAB.CODEMP = EMP.CODEMP    JOIN TGFVEN VEN ON CAB.CODVEND = VEN.CODVEND   WHERE CAB.TIPMOV = 'P' /*P-Pedido de venda*/     AND CAB.DTNEG BETWEEN :P_PERIODO.INI AND :P_PERIODO.FIN     AND (CAB.CODVEND = :P_VENDEDOR OR :P_VENDEDOR IS NULL)     AND CAB.CODEMP IN :P_EMPRESA     AND (CAB.STATUSNOTA = 'L' OR :P_CONFIR = 'N')     AND (UFS.UF = :A_UF OR :A_UF IS NULL)GROUP BY VEN.CODVEND       , VEN.APELIDOORDER BY TICKET DESC]]></expression>
+      <metadata>
+        <field name="VALOR" label="Valor" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+        <field name="QTD" label="Quantidade" type="I" visible="true" useFooter="false"/>
+        <field name="TICKET" label="Ticket Médio" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+        <field name="CODVEND" label="Cód. Vendedor" type="I" visible="true" useFooter="false"/>
+        <field name="APELIDO" label="Vendedor" type="S" visible="true" useFooter="false"/>
+      </metadata>
+      <horizontal-axis>
+        <category field="APELIDO" rotation="0" dropLabel="false">
+          <initView value="first"/>
+        </category>
+      </horizontal-axis>
+      <series>
+        <serie type="column">
+          <xField>$APELIDO</xField>
+          <yField>$TICKET</yField>
+          <display><![CDATA[Análise de Vendas<br>Valor: $VALOR<br>Quantidade de notas: $QTD]]></display>
+          <color>0x6699</color>
+          <refresh-details ui-list="grd_gu44ja">
+            <param id="A_CODVEND">$CODVEND</param>
+            <param id="A_APELIDO">$APELIDO</param>
+            <param id="A_TICKET">$TICKET</param>
+          </refresh-details>
+        </serie>
+      </series>
+    </chart>
+    <grid id="grd_gu44ja" useNewGrid="S">
+      <args>
+        <arg id="A_CODVEND" type="integer"/>
+        <arg id="A_APELIDO" type="text"/>
+        <arg id="A_TICKET" type="decimal"/>
+      </args>
+      <title><![CDATA[Detalhes<br>:A_APELIDO]]></title>
+      <expression type="sql" data-source="MGEDS"><![CDATA[  SELECT CAB.NUNOTA       , CAB.DTNEG       , CAB.VLRNOTA       , CASE WHEN :A_TICKET <= CAB.VLRNOTA THEN 1               WHEN :A_TICKET > CAB.VLRNOTA THEN 2              WHEN :A_TICKET IS NULL THEN 3 END AS ICONE       , PAR.CODPARC       , PAR.NOMEPARC       , UFS.UF       , UFS.DESCRICAO       , CID.NOMECID       , VEN.CODVEND       , VEN.APELIDO       , EMP.CODEMP       , EMP.NOMEFANTASIA    FROM TGFCAB CAB    JOIN TGFPAR PAR ON CAB.CODPARC = PAR.CODPARC     JOIN TSICID CID ON PAR.CODCID = CID.CODCID    JOIN TSIUFS UFS ON CID.UF = UFS.CODUF    JOIN TSIEMP EMP ON CAB.CODEMP = EMP.CODEMP    JOIN TGFVEN VEN ON CAB.CODVEND = VEN.CODVEND   WHERE CAB.TIPMOV = 'P' /*P-Pedido de venda*/     AND CAB.DTNEG BETWEEN :P_PERIODO.INI AND :P_PERIODO.FIN     AND (CAB.CODVEND = :P_VENDEDOR OR :P_VENDEDOR IS NULL)     AND CAB.CODEMP IN :P_EMPRESA     AND (CAB.STATUSNOTA = 'L' OR :P_CONFIR = 'N')     AND (UFS.UF = :A_UF OR :A_UF IS NULL)     AND (VEN.CODVEND = :A_CODVEND OR :A_CODVEND IS NULL)]]></expression>
+      <metadata>
+        <field name="NUNOTA" label="Núm. Nota" type="I" visible="true" useFooter="false"/>
+        <field name="DTNEG" label="Data" type="D" visible="true" useFooter="false"/>
+        <field name="VLRNOTA" label="Valor" type="F" visible="true" useFooter="SUM" mask="R$ #.##0,00"/>
+        <field name="ICONE" label="Info." type="F" visible="true" useFooter="false">
+          <formatter equalThan="1"><![CDATA[<span style="; src:iconArrowUpRight; somente-icone:S">$VALUE</span>]]></formatter>
+          <formatter equalThan="2"><![CDATA[<span style="; src:iconArrowDownRight; somente-icone:S">$VALUE</span>]]></formatter>
+          <formatter equalThan="3"><![CDATA[<span style="; src:iconOval; somente-icone:S">$VALUE</span>]]></formatter>
+        </field>
+        <field name="CODPARC" label="Cód. Parceiro" type="I" visible="true" useFooter="false"/>
+        <field name="NOMEPARC" label="Parceiro" type="S" visible="true" useFooter="false"/>
+        <field name="UF" label="UF" type="S" visible="true" useFooter="false"/>
+        <field name="DESCRICAO" label="Estado" type="S" visible="true" useFooter="false"/>
+        <field name="NOMECID" label="Cidade" type="S" visible="true" useFooter="false"/>
+        <field name="CODVEND" label="Cód. Vendedor" type="I" visible="true" useFooter="false"/>
+        <field name="APELIDO" label="Vendedor" type="S" visible="true" useFooter="false"/>
+        <field name="CODEMP" label="Cód. Empresa" type="I" visible="true" useFooter="false"/>
+        <field name="NOMEFANTASIA" label="Empresa" type="S" visible="true" useFooter="false"/>
+      </metadata>
+      <on-click-launcher resource-id="br.com.sankhya.com.mov.CentralNotas">
+        <NUNOTA>$NUNOTA</NUNOTA>
+      </on-click-launcher>
+    </grid>
+  </level>
+</gadget>
