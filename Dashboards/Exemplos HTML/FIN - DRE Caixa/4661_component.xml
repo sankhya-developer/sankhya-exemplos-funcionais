@@ -1,0 +1,32 @@
+<gadget>
+  <prompt-parameters>
+    <parameter id="P_PERIODO" description="Período" metadata="datePeriod" required="true" keep-last="true" keep-date="false" order="0"/>
+    <parameter id="P_CR" description="Centro de Resultado" metadata="entity:CentroResultado@CODCENCUS" required="false" keep-last="true" keep-date="false" order="1"/>
+    <parameter id="P_UNIDADE" description="Unidade" metadata="multiList:Text" listType="sql" required="false" keep-last="true" keep-date="false" order="2">
+      <expression type="SQL"><![CDATA[  SELECT NROUNICO AS VALUE       , DESCRICAO AS LABEL    FROM AD_UNIDADESBPS B   WHERE EXISTS (SELECT 1 FROM TSICUS WHERE NROUNICOBP = B.NROUNICO AND AD_CATEGORIA IN ('M', 'U'))ORDER BY LABEL]]></expression>
+    </parameter>
+    <parameter id="P_ANALISE" description="Tipo de Análise" metadata="multiList:Text" listType="text" required="false" keep-last="true" keep-date="false" order="3">
+      <item value="M" label="Somente Matriz"/>
+      <item value="E" label="Unidades Próprias"/>
+      <item value="P" label="Unidade com Participação"/>
+      <item value="R" label="Unidades sem Participação"/>
+      <item value="I" label="Investimentos"/>
+      <item value="O" label="Outros"/>
+    </parameter>
+    <parameter id="P_PERANALISE" description="Períodicidade" metadata="singleList:Text" listType="text" required="false" keep-last="true" keep-date="false" order="4">
+      <item value="M" label="Mensal"/>
+      <item value="T" label="Trimestral"/>
+      <item value="A" label="Anual"/>
+    </parameter>
+    <parameter id="P_TIPOMOV" description="Tipo de Movimentação" metadata="multiList:Text" listType="sql" required="false" keep-last="true" keep-date="false" order="5">
+      <expression type="SQL"><![CDATA[SELECT 0 AS VALUE, 'A pagar' AS LABEL FROM DUAL UNIONSELECT 1 AS VALUE, 'A Receber' AS LABEL FROM DUAL UNIONSELECT 2 AS VALUE, 'Fat. Pendente - Empreito' AS LABEL FROM DUAL UNIONSELECT 3 AS VALUE, 'Fat. Pendente - Medição' AS LABEL FROM DUAL UNIONSELECT 4 AS VALUE, 'Pago' AS LABEL FROM DUAL UNIONSELECT 5 AS VALUE, 'Recebido' AS LABEL FROM DUAL]]></expression>
+    </parameter>
+    <parameter id="P_PROVISAO" description="Considerar provisão?" metadata="boolean" required="false" keep-last="true" keep-date="false" default="true" order="6"/>
+    <parameter id="P_DIRETORIA" description="Diretoria" metadata="multiList:Text" listType="sql" required="false" keep-last="true" keep-date="false" order="7">
+      <expression type="SQL"><![CDATA[SELECT DISTINCT        DIRETORIA AS VALUE,       Initcap(DIRETORIA) AS LABEL  FROM VSICUS_COMP ORDER BY 2]]></expression>
+    </parameter>
+  </prompt-parameters>
+  <level id="lvl_ak7dysp" description="Principal">
+    <html5component id="html5_ak7dysq" entryPoint="NIVEL_1.jsp"/>
+  </level>
+</gadget>

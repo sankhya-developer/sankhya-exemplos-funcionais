@@ -1,0 +1,543 @@
+<gadget>
+  <level id="lvl_op8wtc" description="Principal">
+    <args>
+      <arg id="A_FILTRO" type="text"/>
+    </args>
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="120">
+        <html5component id="html5_af7r1tl" entryPoint="Navbar.jsp"/>
+      </container>
+      <container orientacao="H" tamanhoRelativo="964">
+        <container orientacao="V" tamanhoRelativo="100">
+          <html5component id="html5_af5crc0" entryPoint="MenuLateral.jsp"/>
+        </container>
+        <container orientacao="V" tamanhoRelativo="686">
+          <container orientacao="H" tamanhoRelativo="1160">
+            <container orientacao="V" tamanhoRelativo="267">
+              <chart id="cht_pyvutr" type="bar" nroColuna="6">
+                <title><![CDATA[Solicitações abertas por <b>STATUS</b>]]></title>
+                <expression type="sql" data-source="MGEDS"><![CDATA[SELECT COUNT(PROCESSO) AS QTD,       STATUS,       :A_FILTRO AS FILTRO   FROM CND_CSP CSP WHERE CSP.STATUS NOT IN ('Concluída', 'Cancelado')   AND ((NVL(:A_FILTRO,'T') = 'S' AND CSP.CODUSUINC = :CODUSU_LOG)     OR (NVL(:A_FILTRO,'T') = 'A' AND CSP.CODCENCUS = (SELECT CODCENCUSPAD FROM TSIUSU WHERE CODUSU = :CODUSU_LOG))    OR  NVL(:A_FILTRO,'T') = 'T')GROUP BY STATUSORDER BY QTD DESC]]></expression>
+                <metadata>
+                  <field name="QTD" label="Quantidade" type="I" visible="true" useFooter="false"/>
+                  <field name="STATUS" label="Status" type="S" visible="true" useFooter="false"/>
+                  <field name="FILTRO" label="FILTRO" type="S" visible="true" useFooter="false"/>
+                </metadata>
+                <vertical-axis>
+                  <category field="STATUS" rotation="-45" dropLabel="false">
+                    <initView value="first"/>
+                  </category>
+                </vertical-axis>
+                <series>
+                  <serie type="bar">
+                    <xField>$QTD</xField>
+                    <yField>$STATUS</yField>
+                    <color>0x19424b</color>
+                    <on-click navigate-to="lvl_op8wtd">
+                      <param id="A_TIPO"/>
+                      <param id="A_STATUS">$STATUS</param>
+                      <param id="A_FILTRO">$FILTRO</param>
+                    </on-click>
+                  </serie>
+                </series>
+              </chart>
+            </container>
+            <container orientacao="V" tamanhoRelativo="100">
+              <container orientacao="V" tamanhoRelativo="25">
+                <simple-value id="svl_pyvuts">
+                  <value-expression><![CDATA[<div style='text-align: center;'><span style='font-size: 18px;'><b>Solicitações encerradas nos últimos 6 meses:</b></span></div>]]></value-expression>
+                </simple-value>
+              </container>
+              <container orientacao="V" tamanhoRelativo="25">
+                <simple-value id="svl_uten6i">
+                  <expression type="sql" data-source="MGEDS"><![CDATA[SELECT COUNT(PROCESSO) AS QTD_PESSOA,       CASE WHEN COUNT(PROCESSO) > 1 THEN 'suas' ELSE 'sua' END AS A,       'S' AS FILTRO  FROM CND_CSP CSP WHERE CSP.STATUS = 'Concluída'   AND CSP.CODUSUINC = :CODUSU_LOG   AND MONTHS_BETWEEN(SYSDATE,CSP.DTENTREGA) <= 6GROUP BY STATUS]]></expression>
+                  <metadata>
+                    <field name="QTD_PESSOA" label="QTD_PESSOA" type="I" visible="true" useFooter="false"/>
+                    <field name="A" label="A" type="S" visible="true" useFooter="false"/>
+                    <field name="FILTRO" label="FILTRO" type="S" visible="true" useFooter="false"/>
+                  </metadata>
+                  <value-expression><![CDATA[<div style='text-align: center;'><b><span style='font-size: 16px;'>$QTD_PESSOA $A<br></span></b></div>]]></value-expression>
+                  <on-click navigate-to="lvl_af0gd5r">
+                    <param id="A_FILTRO">$FILTRO</param>
+                  </on-click>
+                </simple-value>
+              </container>
+              <container orientacao="V" tamanhoRelativo="25">
+                <simple-value id="svl_uten6j">
+                  <expression type="sql" data-source="MGEDS"><![CDATA[SELECT COUNT(PROCESSO) AS QTD_AREA,       'A' AS FILTRO  FROM CND_CSP CSP WHERE CSP.STATUS = 'Concluída'   AND CSP.CODCENCUS = (SELECT U.CODCENCUSPAD FROM TSIUSU U WHERE U.CODUSU = :CODUSU_LOG)   AND MONTHS_BETWEEN(SYSDATE,CSP.DTENTREGA) <= 6GROUP BY STATUS]]></expression>
+                  <metadata>
+                    <field name="QTD_AREA" label="QTD_AREA" type="I" visible="true" useFooter="false"/>
+                    <field name="FILTRO" label="FILTRO" type="S" visible="true" useFooter="false"/>
+                  </metadata>
+                  <value-expression><![CDATA[<div style='text-align: center;'><b><span style='font-size: 16px;'>$QTD_AREA da sua área<br></span></b></div>]]></value-expression>
+                  <on-click navigate-to="lvl_af0gd5r">
+                    <param id="A_FILTRO">$FILTRO</param>
+                  </on-click>
+                </simple-value>
+              </container>
+              <container orientacao="V" tamanhoRelativo="25">
+                <simple-value id="svl_uten6k">
+                  <expression type="sql" data-source="MGEDS"><![CDATA[SELECT COUNT(PROCESSO) AS QTD_EMPRESA,       'T' AS FILTRO  FROM CND_CSP CSP WHERE CSP.STATUS = 'Concluída'   AND MONTHS_BETWEEN(SYSDATE,CSP.DTENTREGA) <= 6GROUP BY STATUS]]></expression>
+                  <metadata>
+                    <field name="QTD_EMPRESA" label="QTD_EMPRESA" type="I" visible="true" useFooter="false"/>
+                    <field name="FILTRO" label="FILTRO" type="S" visible="true" useFooter="false"/>
+                  </metadata>
+                  <value-expression><![CDATA[<div style='text-align: center;'><b><span style='font-size: 16px;'>$QTD_EMPRESA de toda a empresa<br></span></b></div>]]></value-expression>
+                  <on-click navigate-to="lvl_af0gd5r">
+                    <param id="A_FILTRO">$FILTRO</param>
+                  </on-click>
+                </simple-value>
+              </container>
+            </container>
+          </container>
+          <container orientacao="V" tamanhoRelativo="1068">
+            <chart id="cht_pyvutt" type="column" nroColuna="6">
+              <title><![CDATA[Solicitações abertas por <b>TIPO</b>]]></title>
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT COUNT(PROCESSO) AS QTD,       PROCESSO,       :A_FILTRO AS FILTRO   FROM CND_CSP CSP WHERE CSP.STATUS NOT IN ('Concluída', 'Cancelado')   AND ((NVL(:A_FILTRO,'T') = 'S' AND CSP.CODUSUINC = :CODUSU_LOG)     OR (NVL(:A_FILTRO,'T') = 'A' AND CSP.CODCENCUS = (SELECT CODCENCUSPAD FROM TSIUSU WHERE CODUSU = :CODUSU_LOG))    OR  NVL(:A_FILTRO,'T') = 'T')GROUP BY PROCESSOORDER BY QTD DESC]]></expression>
+              <metadata>
+                <field name="QTD" label="Quantidade" type="I" visible="true" useFooter="false"/>
+                <field name="PROCESSO" label="Tipo" type="S" visible="true" useFooter="false"/>
+                <field name="FILTRO" label="FILTRO" type="S" visible="true" useFooter="false"/>
+              </metadata>
+              <horizontal-axis>
+                <category field="LABEL" rotation="-45" dropLabel="false">
+                  <initView value="first"/>
+                </category>
+              </horizontal-axis>
+              <series>
+                <serie type="column">
+                  <xField>$PROCESSO</xField>
+                  <yField>$QTD</yField>
+                  <color>0x6c3b64</color>
+                  <on-click navigate-to="lvl_op8wtd">
+                    <param id="A_TIPO">$PROCESSO</param>
+                    <param id="A_STATUS"/>
+                    <param id="A_FILTRO">$FILTRO</param>
+                  </on-click>
+                </serie>
+              </series>
+            </chart>
+          </container>
+          <container orientacao="V" tamanhoRelativo="131">
+            <simple-value id="svl_qnjain">
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT NVL(:A_FILTRO,'T') AS FILTRO FROM DUAL]]></expression>
+              <metadata>
+                <field name="FILTRO" label="FILTRO" type="S" visible="true" useFooter="false"/>
+              </metadata>
+              <value-expression><![CDATA[Ver lista completa]]></value-expression>
+              <on-click navigate-to="lvl_op8wtd">
+                <param id="A_TIPO"/>
+                <param id="A_STATUS"/>
+                <param id="A_FILTRO">$FILTRO</param>
+              </on-click>
+            </simple-value>
+          </container>
+        </container>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_op8wtd" description="2 Detalhe demandas">
+    <args>
+      <arg id="A_FILTRO" type="text"/>
+      <arg id="A_STATUS" type="text"/>
+      <arg id="A_TIPO" type="integer"/>
+    </args>
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="117">
+        <html5component id="html5_qnjacj" entryPoint="Navbar.jsp"/>
+      </container>
+      <container orientacao="H" tamanhoRelativo="851">
+        <container orientacao="V" tamanhoRelativo="572">
+          <container orientacao="V" tamanhoRelativo="50">
+            <grid id="grd_op8wtn" useNewGrid="S">
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT IDINSTPRN     , CODUSUINC     , NOMEUSU     , CODCENCUS     , DESCRCENCUS     , DHINCLUSAO     , CODPRN     , PROCESSO     , DESCRICAO     , STATUS     , CASE WHEN STATUS = 'Não Analisado' AND RESPONSAVEL IS NULL            THEN CASE WHEN CODPRN IN (150, 181, 183)                        OR EXISTS (SELECT 1 FROM AD_TWFPROTRIER WHERE (ROTINAERRO LIKE 'email' OR RESOURCEID LIKE '%nuDsb%') AND IDINSTPRN = CSP.IDINSTPRN)                      THEN 'BIANCA.POLONIA'                      WHEN CODPRN IN (186, 179, 179, 180)                        OR EXISTS (SELECT 1 FROM AD_TWFPROTRIER WHERE RESOURCEID NOT LIKE '%nuDsb%' AND IDINSTPRN = CSP.IDINSTPRN)                      THEN 'DAYANE.SANTOS'                      WHEN CODPRN IN (185) THEN 'ADRIEN.CORREIA'                 END            ELSE RESPONSAVEL            END AS RESPONSAVEL     , DTENTREGA     , (SELECT MAX(IDINSTTAR) FROM TWFITAR TAR WHERE TAR.IDINSTPRN = CSP.IDINSTPRN) AS IDINSTTAR  FROM CND_CSP CSP WHERE CSP.STATUS <> 'Concluída'   AND ((NVL(:A_FILTRO,'T') = 'S' AND CSP.CODUSUINC = :CODUSU_LOG)     OR (NVL(:A_FILTRO,'T') = 'A' AND CSP.CODCENCUS = (SELECT CODCENCUSPAD FROM TSIUSU WHERE CODUSU = :CODUSU_LOG))    OR  NVL(:A_FILTRO,'T') = 'T')   AND (CSP.PROCESSO = :A_TIPO OR :A_TIPO IS NULL)   AND (CSP.STATUS = :A_STATUS OR :A_STATUS IS NULL)]]></expression>
+              <metadata>
+                <field name="IDINSTPRN" label="Nro. Tarefa" type="I" visible="true" useFooter="false"/>
+                <field name="CODUSUINC" label="CODUSUINC" type="I" visible="false" useFooter="false"/>
+                <field name="NOMEUSU" label="Usuário Chave" type="S" visible="true" useFooter="false"/>
+                <field name="CODCENCUS" label="CODCENCUS" type="I" visible="false" useFooter="false"/>
+                <field name="DESCRCENCUS" label="Centro de Resultado" type="S" visible="true" useFooter="false"/>
+                <field name="DHINCLUSAO" label="Dt. Abertura" type="D" visible="true" useFooter="false"/>
+                <field name="CODPRN" label="CODPRN" type="I" visible="false" useFooter="false"/>
+                <field name="PROCESSO" label="Tipo" type="S" visible="true" useFooter="false"/>
+                <field name="DESCRICAO" label="Descrição" type="S" visible="true" useFooter="false"/>
+                <field name="STATUS" label="Status" type="S" visible="true" useFooter="false"/>
+                <field name="RESPONSAVEL" label="Responsável" type="S" visible="true" useFooter="false"/>
+                <field name="DTENTREGA" label="Previsão de Entrega" type="D" visible="true" useFooter="false"/>
+                <field name="IDINSTTAR" label="IDINSTTAR" type="I" visible="false" useFooter="false"/>
+              </metadata>
+              <on-click-launcher resource-id="br.com.sankhya.workflow.listatarefa">
+                <IDINSTPRN>$IDINSTPRN</IDINSTPRN>
+                <IDINSTTAR>$IDINSTTAR</IDINSTTAR>
+              </on-click-launcher>
+              <refresh-details ui-list="grd_op8wto">
+                <param id="A_INSTPRN">$IDINSTPRN</param>
+                <param id="A_PRN">$CODPRN</param>
+              </refresh-details>
+            </grid>
+          </container>
+          <container orientacao="V" tamanhoRelativo="50">
+            <grid id="grd_op8wto" useNewGrid="S">
+              <args>
+                <arg id="A_INSTPRN" type="integer"/>
+                <arg id="A_PRN" type="integer"/>
+              </args>
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT DESCRICAO,       CELULA,       TAMANHO,       SPRINT,       DATAINI,       DATAFIM,       EXECUTANTE,       TAMREAL,       DTCONCLUSAO  FROM CND_CSPDET  WHERE CODPRN = :A_CODPRN   AND IDINSTPRN = :A_INSTPRN]]></expression>
+              <metadata>
+                <field name="DESCRICAO" label="Descrição" type="S" visible="true" useFooter="false"/>
+                <field name="CELULA" label="Célula" type="S" visible="true" useFooter="false"/>
+                <field name="TAMANHO" label="Tamanho" type="S" visible="true" useFooter="false"/>
+                <field name="SPRINT" label="Sprint" type="I" visible="true" useFooter="false"/>
+                <field name="DATAINI" label="Dt. Inicial (SLA)" type="T" visible="true" useFooter="false"/>
+                <field name="DATAFIM" label="Dt. Fim (SLA)" type="T" visible="true" useFooter="false"/>
+                <field name="EXECUTANTE" label="Executante" type="S" visible="true" useFooter="false"/>
+                <field name="TAMREAL" label="Tamanho Real" type="S" visible="true" useFooter="false"/>
+                <field name="DTCONCLUSAO" label="Dt. Conclusão" type="D" visible="true" useFooter="false"/>
+              </metadata>
+            </grid>
+          </container>
+        </container>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_af0gd5r" description="2 Detalhe demandas concluídas">
+    <args>
+      <arg id="A_FILTRO" type="text"/>
+    </args>
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="7100">
+        <html5component id="html5_af0gd5t" entryPoint="Navbar.jsp"/>
+      </container>
+      <container orientacao="V" tamanhoRelativo="22400">
+        <grid id="grd_af0gd5v" useNewGrid="S">
+          <expression type="sql" data-source="MGEDS"><![CDATA[SELECT IDINSTPRN     , CODUSUINC     , NOMEUSU     , CODCENCUS     , DESCRCENCUS     , DHINCLUSAO     , CODPRN     , PROCESSO     , DESCRICAO     , STATUS     , RESPONSAVEL     , DTENTREGA     , (SELECT MAX(IDINSTTAR) FROM TWFITAR TAR WHERE TAR.IDINSTPRN = CSP.IDINSTPRN) AS IDINSTTAR  FROM CND_CSP CSP WHERE CSP.STATUS = 'Concluída'   AND ((NVL(:A_FILTRO,'T') = 'S' AND CSP.CODUSUINC = :CODUSU_LOG)     OR (NVL(:A_FILTRO,'T') = 'A' AND CSP.CODCENCUS = (SELECT CODCENCUSPAD FROM TSIUSU WHERE CODUSU = :CODUSU_LOG))    OR  NVL(:A_FILTRO,'T') = 'T')]]></expression>
+          <metadata>
+            <field name="IDINSTPRN" label="Nro. Tarefa" type="I" visible="true" useFooter="false"/>
+            <field name="CODUSUINC" label="CODUSUINC" type="I" visible="false" useFooter="false"/>
+            <field name="NOMEUSU" label="Usuário Chave" type="S" visible="true" useFooter="false"/>
+            <field name="CODCENCUS" label="CODCENCUS" type="I" visible="false" useFooter="false"/>
+            <field name="DESCRCENCUS" label="Centro de Resultado" type="S" visible="true" useFooter="false"/>
+            <field name="DHINCLUSAO" label="Dt. Abertura" type="D" visible="true" useFooter="false"/>
+            <field name="CODPRN" label="CODPRN" type="I" visible="false" useFooter="false"/>
+            <field name="PROCESSO" label="Tipo" type="S" visible="true" useFooter="false"/>
+            <field name="DESCRICAO" label="Descrição" type="S" visible="true" useFooter="false"/>
+            <field name="STATUS" label="Status" type="S" visible="true" useFooter="false"/>
+            <field name="RESPONSAVEL" label="Responsável" type="S" visible="true" useFooter="false"/>
+            <field name="DTENTREGA" label="Previsão de Entrega" type="D" visible="true" useFooter="false"/>
+            <field name="IDINSTTAR" label="IDINSTTAR" type="F" visible="false" useFooter="false"/>
+          </metadata>
+          <on-click-launcher resource-id="br.com.sankhya.workflow.listatarefa">
+            <IDINSTPRN>$IDINSTPRN</IDINSTPRN>
+            <IDINSTTAR>$IDINSTTAR</IDINSTTAR>
+          </on-click-launcher>
+        </grid>
+      </container>
+      <container orientacao="V" tamanhoRelativo="29500">
+        <grid id="grd_af0gd5x" useNewGrid="S">
+          <args>
+            <arg id="A_CODPRN" type="integer"/>
+            <arg id="A_INSTPRN" type="integer"/>
+          </args>
+          <expression type="sql" data-source="MGEDS"><![CDATA[SELECT DESCRICAO,       CELULA,       TAMANHO,       SPRINT,       DATAINI,       DATAFIM,       EXECUTANTE,       TAMREAL,       DTCONCLUSAO  FROM CND_CSPDET  WHERE CODPRN = :A_CODPRN   AND IDINSTPRN = :A_INSTPRN]]></expression>
+          <metadata>
+            <field name="DESCRICAO" label="Descrição" type="S" visible="true" useFooter="false"/>
+            <field name="CELULA" label="Célula" type="S" visible="true" useFooter="false"/>
+            <field name="TAMANHO" label="Tamanho" type="S" visible="true" useFooter="false"/>
+            <field name="SPRINT" label="Sprint" type="I" visible="true" useFooter="false"/>
+            <field name="DATAINI" label="Dt. Inicial (SLA)" type="T" visible="true" useFooter="false"/>
+            <field name="DATAFIM" label="Dt. Fim (SLA)" type="T" visible="true" useFooter="false"/>
+            <field name="EXECUTANTE" label="Executante" type="S" visible="true" useFooter="false"/>
+            <field name="TAMREAL" label="Tamanho Real" type="S" visible="true" useFooter="false"/>
+            <field name="DTCONCLUSAO" label="Dt. Conclusão" type="D" visible="true" useFooter="false"/>
+          </metadata>
+        </grid>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_op8wte" description="3 Nova Solicitação">
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="117">
+        <html5component id="html5_op8wvs" entryPoint="Navbar.jsp"/>
+      </container>
+      <container orientacao="V" tamanhoRelativo="752">
+        <container orientacao="H" tamanhoRelativo="20">
+          <container orientacao="V" tamanhoRelativo="33">
+            <simple-value id="svl_op8wxg">
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT DISTINCT        CDT.NU,        CDT.NOMECENTRAL,       DET.CODPRN      FROM AD_TSICDT CDT     LEFT JOIN AD_TSICDTDET DET ON CDT.NU = DET.NUWHERE CDT.NU = 5]]></expression>
+              <metadata>
+                <field name="NU" label="NU" type="I" visible="true" useFooter="false"/>
+                <field name="NOMECENTRAL" label="NOMECENTRAL" type="S" visible="true" useFooter="false"/>
+                <field name="CODPRN" label="CODPRN" type="I" visible="true" useFooter="false"/>
+              </metadata>
+              <value-expression><![CDATA[<center><table border=1 $COR><tr height=40><td align=center width=200>$NOMECENTRAL</td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_op8wtf">
+                <param id="A_CODTAREFA">$NU</param>
+                <param id="A_TPSERVICO">$NOMECENTRAL</param>
+              </on-click>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="33">
+            <simple-value id="svl_op8wxh">
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT DISTINCT        CDT.NU,        CDT.NOMECENTRAL,       DET.CODPRN      FROM AD_TSICDT CDT     LEFT JOIN AD_TSICDTDET DET ON CDT.NU = DET.NUWHERE CDT.NU = 18]]></expression>
+              <metadata>
+                <field name="NU" label="NU" type="I" visible="true" useFooter="false"/>
+                <field name="NOMECENTRAL" label="NOMECENTRAL" type="S" visible="true" useFooter="false"/>
+                <field name="CODPRN" label="CODPRN" type="I" visible="true" useFooter="false"/>
+              </metadata>
+              <value-expression><![CDATA[<center><table border=1 $COR><tr height=40><td align=center width=200>$NOMECENTRAL</td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_op8wtf">
+                <param id="A_CODTAREFA">$NU</param>
+                <param id="A_TPSERVICO">$NOMECENTRAL</param>
+              </on-click>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="33">
+            <simple-value id="svl_op8wxi">
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT DISTINCT        CDT.NU,        CDT.NOMECENTRAL,       DET.CODPRN      FROM AD_TSICDT CDT     LEFT JOIN AD_TSICDTDET DET ON CDT.NU = DET.NUWHERE CDT.NU = 21]]></expression>
+              <metadata>
+                <field name="NU" label="NU" type="I" visible="true" useFooter="false"/>
+                <field name="NOMECENTRAL" label="NOMECENTRAL" type="S" visible="true" useFooter="false"/>
+                <field name="CODPRN" label="CODPRN" type="I" visible="true" useFooter="false"/>
+              </metadata>
+              <value-expression><![CDATA[<center><table border=1 $COR><tr height=40><td align=center width=200>$NOMECENTRAL</td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_op8wtf">
+                <param id="A_CODTAREFA">$NU</param>
+                <param id="A_TPSERVICO">$NOMECENTRAL</param>
+              </on-click>
+            </simple-value>
+          </container>
+        </container>
+        <container orientacao="H" tamanhoRelativo="20">
+          <container orientacao="V" tamanhoRelativo="33">
+            <simple-value id="svl_op8wxj">
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT DISTINCT        CDT.NU,        CDT.NOMECENTRAL,       DET.CODPRN      FROM AD_TSICDT CDT     LEFT JOIN AD_TSICDTDET DET ON CDT.NU = DET.NUWHERE CDT.NU = 28]]></expression>
+              <metadata>
+                <field name="NU" label="NU" type="I" visible="true" useFooter="false"/>
+                <field name="NOMECENTRAL" label="NOMECENTRAL" type="S" visible="true" useFooter="false"/>
+                <field name="CODPRN" label="CODPRN" type="I" visible="true" useFooter="false"/>
+              </metadata>
+              <value-expression><![CDATA[<center><table border=1 $COR><tr height=40><td align=center width=200>$NOMECENTRAL</td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_op8wtf">
+                <param id="A_CODTAREFA">$NU</param>
+                <param id="A_TPSERVICO">$NOMECENTRAL</param>
+              </on-click>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="33">
+            <simple-value id="svl_tkpzen">
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT DISTINCT        CDT.NU,        CDT.NOMECENTRAL,       DET.CODPRN      FROM AD_TSICDT CDT     LEFT JOIN AD_TSICDTDET DET ON CDT.NU = DET.NUWHERE CDT.NU = 29]]></expression>
+              <metadata>
+                <field name="NU" label="NU" type="I" visible="true" useFooter="false"/>
+                <field name="NOMECENTRAL" label="NOMECENTRAL" type="S" visible="true" useFooter="false"/>
+                <field name="CODPRN" label="CODPRN" type="I" visible="true" useFooter="false"/>
+              </metadata>
+              <value-expression><![CDATA[<center><table border=1 $COR><tr height=40><td align=center width=200>$NOMECENTRAL</td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_op8wtf">
+                <param id="A_CODTAREFA">$NU</param>
+                <param id="A_TPSERVICO">$NOMECENTRAL</param>
+              </on-click>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="33">
+            <simple-value id="svl_tkpzeo">
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT DISTINCT        CDT.NU,        CDT.NOMECENTRAL,       DET.CODPRN      FROM AD_TSICDT CDT     LEFT JOIN AD_TSICDTDET DET ON CDT.NU = DET.NUWHERE CDT.NU = 31]]></expression>
+              <metadata>
+                <field name="NU" label="NU" type="I" visible="true" useFooter="false"/>
+                <field name="NOMECENTRAL" label="NOMECENTRAL" type="S" visible="true" useFooter="false"/>
+                <field name="CODPRN" label="CODPRN" type="I" visible="true" useFooter="false"/>
+              </metadata>
+              <value-expression><![CDATA[<center><table border=1 $COR><tr height=40><td align=center width=200>$NOMECENTRAL</td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_op8wtf">
+                <param id="A_CODTAREFA">$NU</param>
+                <param id="A_TPSERVICO">$NOMECENTRAL</param>
+              </on-click>
+            </simple-value>
+          </container>
+        </container>
+        <container orientacao="H" tamanhoRelativo="20">
+          <container orientacao="V" tamanhoRelativo="33">
+            <simple-value id="svl_tkpzep">
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT DISTINCT        CDT.NU,        CDT.NOMECENTRAL,       DET.CODPRN      FROM AD_TSICDT CDT     LEFT JOIN AD_TSICDTDET DET ON CDT.NU = DET.NUWHERE CDT.NU = 32]]></expression>
+              <metadata>
+                <field name="NU" label="NU" type="I" visible="true" useFooter="false"/>
+                <field name="NOMECENTRAL" label="NOMECENTRAL" type="S" visible="true" useFooter="false"/>
+                <field name="CODPRN" label="CODPRN" type="I" visible="true" useFooter="false"/>
+              </metadata>
+              <value-expression><![CDATA[<div style='text-align: right;'></div><center><table border=1 $COR><tr height=40><td align=center width=200>$NOMECENTRAL</td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_op8wtf">
+                <param id="A_CODTAREFA">$NU</param>
+                <param id="A_TPSERVICO">$NOMECENTRAL</param>
+              </on-click>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="33">
+            <simple-value id="svl_tkpzeq">
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT DISTINCT        CDT.NU,        CDT.NOMECENTRAL,       DET.CODPRN      FROM AD_TSICDT CDT     LEFT JOIN AD_TSICDTDET DET ON CDT.NU = DET.NUWHERE CDT.NU = 33]]></expression>
+              <metadata>
+                <field name="NU" label="NU" type="I" visible="true" useFooter="false"/>
+                <field name="NOMECENTRAL" label="NOMECENTRAL" type="S" visible="true" useFooter="false"/>
+                <field name="CODPRN" label="CODPRN" type="I" visible="true" useFooter="false"/>
+              </metadata>
+              <value-expression><![CDATA[<center><table border=1 $COR><tr height=40><td align=center width=200>$NOMECENTRAL</td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_op8wtf">
+                <param id="A_CODTAREFA">$NU</param>
+                <param id="A_TPSERVICO">$NOMECENTRAL</param>
+              </on-click>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="33">
+            <simple-value id="svl_tkpzer">
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT DISTINCT        CDT.NU,        CDT.NOMECENTRAL,       DET.CODPRN      FROM AD_TSICDT CDT     LEFT JOIN AD_TSICDTDET DET ON CDT.NU = DET.NUWHERE CDT.NU = 35]]></expression>
+              <metadata>
+                <field name="NU" label="NU" type="I" visible="true" useFooter="false"/>
+                <field name="NOMECENTRAL" label="NOMECENTRAL" type="S" visible="true" useFooter="false"/>
+                <field name="CODPRN" label="CODPRN" type="I" visible="true" useFooter="false"/>
+              </metadata>
+              <value-expression><![CDATA[<center><table border=1 $COR><tr height=40><td align=center width=200>$NOMECENTRAL</td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_op8wtf">
+                <param id="A_CODTAREFA">$NU</param>
+                <param id="A_TPSERVICO">$NOMECENTRAL</param>
+              </on-click>
+            </simple-value>
+          </container>
+        </container>
+        <container orientacao="H" tamanhoRelativo="20">
+          <container orientacao="V" tamanhoRelativo="33">
+            <simple-value id="svl_tkpzes">
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT DISTINCT        CDT.NU,        CDT.NOMECENTRAL,       DET.CODPRN      FROM AD_TSICDT CDT     LEFT JOIN AD_TSICDTDET DET ON CDT.NU = DET.NUWHERE CDT.NU = 36]]></expression>
+              <metadata>
+                <field name="NU" label="NU" type="I" visible="true" useFooter="false"/>
+                <field name="NOMECENTRAL" label="NOMECENTRAL" type="S" visible="true" useFooter="false"/>
+                <field name="CODPRN" label="CODPRN" type="I" visible="true" useFooter="false"/>
+              </metadata>
+              <value-expression><![CDATA[<center><table border=1 $COR><tr height=40><td align=center width=200>$NOMECENTRAL</td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_op8wtf">
+                <param id="A_CODTAREFA">$NU</param>
+                <param id="A_TPSERVICO">$NOMECENTRAL</param>
+              </on-click>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="33">
+            <simple-value id="svl_tkpzet">
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT DISTINCT        CDT.NU,        CDT.NOMECENTRAL,       DET.CODPRN      FROM AD_TSICDT CDT     LEFT JOIN AD_TSICDTDET DET ON CDT.NU = DET.NUWHERE CDT.NU = 37]]></expression>
+              <metadata>
+                <field name="NU" label="NU" type="I" visible="true" useFooter="false"/>
+                <field name="NOMECENTRAL" label="NOMECENTRAL" type="S" visible="true" useFooter="false"/>
+                <field name="CODPRN" label="CODPRN" type="I" visible="true" useFooter="false"/>
+              </metadata>
+              <value-expression><![CDATA[<center><table border=1 $COR><tr height=40><td align=center width=200>$NOMECENTRAL</td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_op8wtf">
+                <param id="A_CODTAREFA">$NU</param>
+                <param id="A_TPSERVICO">$NOMECENTRAL</param>
+              </on-click>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="33">
+            <simple-value id="svl_tkpzeu">
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT DISTINCT        CDT.NU,        CDT.NOMECENTRAL,       DET.CODPRN      FROM AD_TSICDT CDT     LEFT JOIN AD_TSICDTDET DET ON CDT.NU = DET.NUWHERE CDT.NU = 38]]></expression>
+              <metadata>
+                <field name="NU" label="NU" type="I" visible="true" useFooter="false"/>
+                <field name="NOMECENTRAL" label="NOMECENTRAL" type="S" visible="true" useFooter="false"/>
+                <field name="CODPRN" label="CODPRN" type="I" visible="true" useFooter="false"/>
+              </metadata>
+              <value-expression><![CDATA[<center><table border=1 $COR><tr height=40><td align=center width=200>$NOMECENTRAL</td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_op8wtf">
+                <param id="A_CODTAREFA">$NU</param>
+                <param id="A_TPSERVICO">$NOMECENTRAL</param>
+              </on-click>
+            </simple-value>
+          </container>
+        </container>
+        <container orientacao="H" tamanhoRelativo="20">
+          <container orientacao="V" tamanhoRelativo="33">
+            <simple-value id="svl_ad760g9">
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT DISTINCT        CDT.NU,        CDT.NOMECENTRAL,       DET.CODPRN      FROM AD_TSICDT CDT     LEFT JOIN AD_TSICDTDET DET ON CDT.NU = DET.NUWHERE CDT.NU = 9]]></expression>
+              <metadata>
+                <field name="NU" label="NU" type="I" visible="true" useFooter="false"/>
+                <field name="NOMECENTRAL" label="NOMECENTRAL" type="S" visible="true" useFooter="false"/>
+                <field name="CODPRN" label="CODPRN" type="I" visible="true" useFooter="false"/>
+              </metadata>
+              <value-expression><![CDATA[<center><table border=1 $COR><tr height=40><td align=center width=200>$NOMECENTRAL</td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_op8wtf">
+                <param id="A_CODTAREFA">$NU</param>
+                <param id="A_TPSERVICO">$NOMECENTRAL</param>
+              </on-click>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="33">
+            <simple-value id="svl_8i8al3">
+              <expression type="sql" data-source="MGEDS"><![CDATA[SELECT DISTINCT        CDT.NU,        CDT.NOMECENTRAL,       DET.CODPRN      FROM AD_TSICDT CDT     LEFT JOIN AD_TSICDTDET DET ON CDT.NU = DET.NUWHERE CDT.NU = 40]]></expression>
+              <metadata>
+                <field name="NU" label="NU" type="I" visible="true" useFooter="false"/>
+                <field name="NOMECENTRAL" label="NOMECENTRAL" type="S" visible="true" useFooter="false"/>
+                <field name="CODPRN" label="CODPRN" type="I" visible="true" useFooter="false"/>
+              </metadata>
+              <value-expression><![CDATA[<center><table border=1 $COR><tr height=40><td align=center width=200>$NOMECENTRAL</td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_op8wtf">
+                <param id="A_CODTAREFA">$NU</param>
+                <param id="A_TPSERVICO">$NOMECENTRAL</param>
+              </on-click>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="33"/>
+        </container>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_op8wtf" description="4 Detalhe Nova Solicitação">
+    <args>
+      <arg id="A_CODTAREFA" type="integer"/>
+      <arg id="A_TPSERVICO" type="text"/>
+    </args>
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="500">
+        <html5component id="html5_uqzppt" entryPoint="Navbar.jsp"/>
+      </container>
+      <container orientacao="H" tamanhoRelativo="680">
+        <simple-value id="svl_t7haom">
+          <expression type="sql" data-source="MGEDS"><![CDATA[SELECT NU, DESCRCENTRAL FROM AD_TSICDT WHERE NU = :A_CODTAREFA]]></expression>
+          <metadata>
+            <field name="NU" label="NU" type="I" visible="true" useFooter="false"/>
+            <field name="DESCRCENTRAL" label="DESCRCENTRAL" type="S" visible="true" useFooter="false"/>
+          </metadata>
+          <value-expression><![CDATA[<span style='font-size: 16px;'><b><span style='color: #6C3B64;'>$DESCRCENTRAL</span></b></span>]]></value-expression>
+        </simple-value>
+      </container>
+      <container orientacao="H" tamanhoRelativo="3080">
+        <container orientacao="V" tamanhoRelativo="50">
+          <grid id="grd_t7haao" useNewGrid="S">
+            <title><![CDATA[Projetos abertos desse tipo:]]></title>
+            <expression type="sql" data-source="MGEDS"><![CDATA[SELECT IDINSTPRN,       DESCRICAO,       NOMEUSU,       DHINCLUSAO     , (SELECT MAX(IDINSTTAR) FROM TWFITAR TAR WHERE TAR.IDINSTPRN = CSP.IDINSTPRN) AS IDINSTTAR  FROM CND_CSP CSP WHERE STATUS <> 'Concluída'   AND PROCESSO = :A_TPSERVICO]]></expression>
+            <metadata>
+              <field name="IDINSTPRN" label="Nro" type="I" visible="true" useFooter="false"/>
+              <field name="DESCRICAO" label="Descrição" type="S" visible="true" useFooter="false"/>
+              <field name="NOMEUSU" label="Usuário Chave" type="S" visible="true" useFooter="false"/>
+              <field name="DHINCLUSAO" label="Dt. Abertura" type="D" visible="true" useFooter="false"/>
+              <field name="IDINSTTAR" label="IDINSTTAR" type="I" visible="false" useFooter="false"/>
+            </metadata>
+            <on-click-launcher resource-id="br.com.sankhya.workflow.listatarefa">
+              <IDINSTPRN>$IDINSTPRN</IDINSTPRN>
+              <IDINSTTAR>$IDINSTTAR</IDINSTTAR>
+            </on-click-launcher>
+          </grid>
+        </container>
+        <container orientacao="V" tamanhoRelativo="50">
+          <container orientacao="V" tamanhoRelativo="1051">
+            <html5component id="html5_ezlva9" entryPoint="linkProcessos.jsp"/>
+          </container>
+        </container>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_op8wtg" description="5 Sobre a área">
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="108">
+        <html5component id="html5_pyvvbq" entryPoint="Navbar.jsp"/>
+      </container>
+      <container orientacao="H" tamanhoRelativo="713">
+        <container orientacao="V" tamanhoRelativo="648">
+          <html5component id="html5_pyvvbs" entryPoint="SobreArea.jsp"/>
+        </container>
+      </container>
+    </container>
+  </level>
+</gadget>

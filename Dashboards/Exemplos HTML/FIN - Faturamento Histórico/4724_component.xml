@@ -1,0 +1,51 @@
+<gadget>
+  <prompt-parameters>
+    <parameter id="P_ANOVEND" description="Ano de Venda" metadata="singleList:Text" listType="text" required="false" keep-last="true" keep-date="false" order="0">
+      <item value="2018" label="2018"/>
+      <item value="2019" label="2019"/>
+      <item value="2020" label="2020"/>
+      <item value="2021" label="2021"/>
+    </parameter>
+    <parameter id="P_ANOFATUR" description="Ano de Faturamento" metadata="singleList:Text" listType="text" required="false" keep-last="true" keep-date="false" order="1">
+      <item value="2018" label="2018"/>
+      <item value="2019" label="2019"/>
+      <item value="2020" label="2020"/>
+      <item value="2021" label="2021"/>
+    </parameter>
+    <parameter id="P_PERANALISE" description="Periodicidade" metadata="singleList:Text" listType="text" required="false" keep-last="true" keep-date="false" order="2">
+      <item value="M" label="Mensal"/>
+      <item value="T" label="Trimestral"/>
+      <item value="A" label="Anual"/>
+    </parameter>
+  </prompt-parameters>
+  <level id="lvl_z6yz4k" description="Principal">
+    <container orientacao="V" tamanhoRelativo="100">
+      <html5component id="html5_z6yz4l" entryPoint="level1.jsp"/>
+    </container>
+  </level>
+  <level id="lvl_cau8no" description="Unidades">
+    <container orientacao="V" tamanhoRelativo="100">
+      <html5component id="html5_cau8np" entryPoint="level_unidade.jsp"/>
+    </container>
+  </level>
+  <level id="lvl_e48gfn" description="Grid">
+    <container orientacao="V" tamanhoRelativo="100">
+      <grid id="grd_e48gfo" useNewGrid="S">
+        <expression type="sql" data-source="MGEDS"><![CDATA[SELECT FAT.PEDIDO,       FAT.NOTA,       FAT.DTVENDA,       FAT.DTFATUR,       FAT.VALOR,       FAT.NROUNICOBP AS CODUNIDADE,       (SELECT UNI.DESCRICAO FROM AD_UNIDADESBPS UNI WHERE UNI.NROUNICO = FAT.NROUNICOBP) AS UNIDADE,       FAT.CODNAT,       (SELECT NAT.DESCRNAT FROM TGFNAT NAT WHERE NAT.CODNAT = FAT.CODNAT) AS NATUREZA,       FAT.CODPROJ,       (SELECT PRJ.IDENTIFICACAO FROM TCSPRJ PRJ WHERE CODPROJ = FAT.CODPROJ) AS PROJETO  FROM CND_FATURAMENTO FAT  WHERE 1=1    AND TRUNC(FAT.CODNAT,-2) IN (110100,110200,110300,110400,110500,110600,110700,110800,110900)   AND (FAT.CODEMP = 10 OR FAT.CODEMP <> 10 AND FAT.NROUNICOBP = 24 OR FAT.CODEMP <> 10 AND FAT.STATUS NOT IN ('R','P','O'))   AND EXTRACT(YEAR FROM FAT.DTFATUR) = :P_ANOFATUR]]></expression>
+        <metadata>
+          <field name="PEDIDO" label="Pedido" type="I" visible="true" useFooter="false"/>
+          <field name="NOTA" label="Nota" type="I" visible="true" useFooter="false"/>
+          <field name="DTVENDA" label="Dt. Venda" type="D" visible="true" useFooter="false"/>
+          <field name="DTFATUR" label="Dt. Faturamento" type="D" visible="true" useFooter="false"/>
+          <field name="VALOR" label="Valor" type="F" visible="true" useFooter="SUM" mask="R$ #.##0,00"/>
+          <field name="CODUNIDADE" label="Cód. Unidade" type="I" visible="true" useFooter="false"/>
+          <field name="UNIDADE" label="Unidade" type="S" visible="true" useFooter="false"/>
+          <field name="CODNAT" label="Cód. Natureza" type="I" visible="true" useFooter="false"/>
+          <field name="NATUREZA" label="Natureza" type="S" visible="true" useFooter="false"/>
+          <field name="CODPROJ" label="Cód. Projeto" type="I" visible="true" useFooter="false"/>
+          <field name="PROJETO" label="Projeto" type="S" visible="true" useFooter="false"/>
+        </metadata>
+      </grid>
+    </container>
+  </level>
+</gadget>

@@ -1,0 +1,527 @@
+SELECT SYSDATE AS DTREF,
+           A.AD_CONDOMINIO,
+           A.REFERENCIA,
+           A.CODCENCUS,
+           A.AD_SKJV2,
+           A.NROUNICOBP,
+           A.CTACTB,
+           A.DESCRCTA,
+           A.CODPROJ,
+           A.SKJV,
+           A.AD_CATEGORIA,
+           A.STATUS,
+           A.CODDIRETORIA,
+           A.DIRETORIA,
+           A.CR_NOVO,
+           A.CODEMP,
+           'M' AS ANALISE,
+           SUM(A.REC_BRUT_MC) AS REC_BRUT,
+    
+           SUM(A.IMPOSTO) AS V2_DEDUTORES,
+    
+           SUM(A.REPASSE_UNI) + SUM(A.IMPOSTO) AS DEDUTORES,
+    
+           SUM(A.REC_BRUT_MC)+SUM(A.IMPOSTO) AS V2_REC_LIQ,
+           
+           SUM(A.REPASSE_UNI) + SUM(A.REPASSE) AS DESP_REPASSE,
+    
+           SUM(A.REC_BRUT_MC)+ SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.REPASSE) AS REC_LIQ,
+    
+           SUM(A.CUSTOS) AS CUSTOS, 
+    
+           SUM(A.REC_BRUT_MC)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.REPASSE) + SUM(A.CUSTOS) AS LCR_BRUTO,
+    
+           SUM(A.DESP_ADM) + SUM(A.DESP_COM) + SUM(A.DESP_OUT) AS DESP_OPER,
+    
+           SUM(A.REC_BRUT_MC)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.REPASSE) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) AS LCR_OPER,
+    
+           SUM(A.REC_FIN) + SUM(A.DESP_FIN) AS RESULTADO_FIN,
+    
+           SUM(A.REC_BRUT_MC)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.REPASSE) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) + SUM(A.REC_FIN) +
+            SUM(A.DESP_FIN) AS LCR_ANTES_IR_CSLL,
+    
+           SUM(A.IR_S_LCR) AS IR_S_LCR,  
+           SUM(A.CS_S_LCR) AS CS_S_LCR,
+    
+           SUM(A.REC_BRUT_MC)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.REPASSE) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) + SUM(A.REC_FIN) +
+            SUM(A.DESP_FIN) + SUM(A.IR_S_LCR) + SUM(A.CS_S_LCR) AS LCR_LIQ,
+    
+           SUM(A.IRPJ_CSLL) AS IRPJ_CSLL,
+    
+           SUM(A.REC_BRUT_MC)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.REPASSE) +
+            SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) AS EBIT,
+    
+           SUM(A.DEP_AM_EX) AS DEP_AM_EX,
+    
+           SUM(A.REC_BRUT_MC)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.REPASSE) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) - SUM(A.DEP_AM_EX) AS EBTIDA,
+    
+           SUM(A.AJUSTES) AS AJUSTES,
+           SUM(A.AJUSTES_PERDA) AS AJUSTES_PERDA,
+           SUM(A.AJUSTES_REPASSE) AS AJUSTES_REPASSE,
+    
+            SUM(A.REC_BRUT_MC)+SUM(A.IMPOSTO) +
+            SUM(A.REPASSE_UNI) + SUM(A.REPASSE) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) - SUM(A.DEP_AM_EX) +
+            SUM(A.AJUSTES) AS EBTIDAAJUS,
+    
+           SUM(A.IMPOSTO) AS IMPOSTO,
+           SUM(A.CUSTOS_SER) AS CUSTOS_SER,
+           SUM(A.CUSTOS_IND) AS CUSTOS_IND,
+           SUM(A.DESP_COM) AS DESP_COM,
+           SUM(A.DESP_ADM) AS DESP_ADM,
+           SUM(A.DESP_OUT) AS DESP_OUT,
+           SUM(A.REC_FIN) AS REC_FIN,
+           SUM(A.DESP_FIN) AS DESP_FIN,
+           SUM(A.REPASSE_UNI) AS REPASSE_UNI,
+           SUM(A.REPASSE) AS REPASSE
+    
+      FROM CND_DRE2 A
+     WHERE EXISTS(SELECT 1 FROM TSIEMP EMP WHERE EMP.AD_EMPGRUPO = 'S' AND EMP.CODEMP = A.CODEMP) 
+       AND AD_CATEGORIA IN ('M','I')
+       AND CODCENCUS <> 13001000 /*POLO TECNOLOGICO*/
+    
+    GROUP BY A.AD_CONDOMINIO,
+           A.REFERENCIA,
+           A.CODCENCUS,
+           A.NROUNICOBP,
+           A.CTACTB,
+           A.DESCRCTA,
+           A.AD_SKJV2,
+           A.CODPROJ,
+           A.SKJV,
+           A.AD_CATEGORIA,
+           A.CODEMP,
+           A.STATUS,
+           A.CODDIRETORIA,
+           A.DIRETORIA,
+           A.CR_NOVO
+           
+    UNION ALL 
+    
+    SELECT SYSDATE AS DTREF,
+           A.AD_CONDOMINIO,
+           A.REFERENCIA,
+           A.CODCENCUS,
+           A.AD_SKJV2,
+           A.NROUNICOBP,
+           A.CTACTB,
+           A.DESCRCTA,
+           A.CODPROJ,
+           A.SKJV,
+           A.AD_CATEGORIA,
+           A.STATUS,
+           A.CODDIRETORIA,
+           A.DIRETORIA,
+           A.CR_NOVO,
+           A.CODEMP,
+           'C' AS ANALISE,
+           
+           SUM(A.REC_BRUT_MC) AS REC_BRUT,
+    
+           SUM(A.IMPOSTO) AS V2_DEDUTORES,
+    
+           SUM(A.REPASSE_UNI) + SUM(A.IMPOSTO) AS DEDUTORES,
+    
+           SUM(A.REC_BRUT_MC) + SUM(A.IMPOSTO) AS V2_REC_LIQ,
+           
+           SUM(A.REPASSE_UNI) AS DESP_REPASSE,
+    
+           SUM(A.REC_BRUT_MC) + SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) AS REC_LIQ,
+    
+           SUM(A.CUSTOS) AS CUSTOS, 
+    
+           SUM(A.REC_BRUT_MC)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) AS LCR_BRUTO,
+    
+           SUM(A.DESP_ADM) + SUM(A.DESP_COM) + SUM(A.DESP_OUT) AS DESP_OPER,
+    
+           SUM(A.REC_BRUT_MC)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) AS LCR_OPER,
+    
+           SUM(A.REC_FIN) + SUM(A.DESP_FIN) AS RESULTADO_FIN,
+    
+           SUM(A.REC_BRUT_MC)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) + SUM(A.REC_FIN) +
+            SUM(A.DESP_FIN) AS LCR_ANTES_IR_CSLL,
+    
+           SUM(A.IR_S_LCR) AS IR_S_LCR,  
+           SUM(A.CS_S_LCR) AS CS_S_LCR,
+    
+           SUM(A.REC_BRUT_MC)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) + SUM(A.REC_FIN) +
+            SUM(A.DESP_FIN) + SUM(A.IR_S_LCR) + SUM(A.CS_S_LCR) AS LCR_LIQ,
+    
+           SUM(A.IRPJ_CSLL) AS IRPJ_CSLL,
+    
+           SUM(A.REC_BRUT_MC)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) +
+            SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) AS EBIT,
+    
+           SUM(A.DEP_AM_EX) AS DEP_AM_EX,
+    
+           SUM(A.REC_BRUT_MC)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) - SUM(A.DEP_AM_EX) AS EBTIDA,
+    
+           SUM(A.AJUSTES) AS AJUSTES,
+           SUM(A.AJUSTES_PERDA) AS AJUSTES_PERDA,
+           SUM(A.AJUSTES_REPASSE) AS AJUSTES_REPASSE,
+    
+            SUM(A.REC_BRUT_MC)+SUM(A.IMPOSTO) +
+            SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) - SUM(A.DEP_AM_EX) +
+            SUM(A.AJUSTES) AS EBTIDAAJUS,
+    
+           SUM(A.IMPOSTO) AS IMPOSTO,
+           SUM(A.CUSTOS_SER) AS CUSTOS_SER,
+           SUM(A.CUSTOS_IND) AS CUSTOS_IND,
+           SUM(A.DESP_COM) AS DESP_COM,
+           SUM(A.DESP_ADM) AS DESP_ADM,
+           SUM(A.DESP_OUT) AS DESP_OUT,
+           SUM(A.REC_FIN) AS REC_FIN,
+           SUM(A.DESP_FIN) AS DESP_FIN,
+           SUM(A.REPASSE_UNI) AS REPASSE_UNI,
+           0 AS REPASSE
+    
+      FROM CND_DRE2 A
+     WHERE EXISTS(SELECT 1 FROM TSIEMP EMP WHERE EMP.AD_EMPGRUPO = 'S' AND EMP.CODEMP = A.CODEMP) 
+       AND CASE WHEN AD_CATEGORIA IN ('M','I') THEN 1
+                WHEN AD_CATEGORIA = 'U' THEN 1
+           END = 1     
+       AND CODCENCUS <> 13001000 /*POLO TECNOLOGICO*/
+    
+    GROUP BY A.AD_CONDOMINIO,
+           A.REFERENCIA,
+           A.CODCENCUS,
+           A.NROUNICOBP,
+           A.CTACTB,
+           A.DESCRCTA,
+           A.AD_SKJV2,
+           A.CODPROJ,
+           A.SKJV,
+           A.AD_CATEGORIA,
+           A.CODEMP,
+           A.STATUS,
+           A.CODDIRETORIA,
+           A.DIRETORIA,
+           A.CR_NOVO
+           
+    UNION ALL
+    
+    SELECT SYSDATE AS DTREF,
+           A.AD_CONDOMINIO,
+           A.REFERENCIA,
+           A.CODCENCUS,
+           A.AD_SKJV2,
+           A.NROUNICOBP,
+           A.CTACTB,
+           A.DESCRCTA,
+           A.CODPROJ,
+           A.SKJV,
+           A.AD_CATEGORIA,
+           A.STATUS,
+           A.CODDIRETORIA,
+           A.DIRETORIA,
+           A.CR_NOVO,
+           A.CODEMP,
+           'E' AS ANALISE,
+           
+           SUM(A.REC_BRUT_U) AS REC_BRUT,
+    
+           SUM(A.IMPOSTO) AS V2_DEDUTORES,
+    
+           SUM(A.REPASSE_UNI) + SUM(A.IMPOSTO) AS DEDUTORES,
+    
+           SUM(A.REC_BRUT_U) + SUM(A.IMPOSTO) AS V2_REC_LIQ,
+           
+           SUM(A.REPASSE_UNI) AS DESP_REPASSE,
+    
+           SUM(A.REC_BRUT_U) + SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) AS REC_LIQ,
+    
+           SUM(A.CUSTOS) AS CUSTOS,
+    
+           SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) AS LCR_BRUTO,
+    
+           SUM(A.DESP_ADM) + SUM(A.DESP_COM) + SUM(A.DESP_OUT) AS DESP_OPER,
+    
+           SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) AS LCR_OPER,
+    
+           SUM(A.REC_FIN) + SUM(A.DESP_FIN) AS RESULTADO_FIN,
+    
+           SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) + SUM(A.REC_FIN) +
+            SUM(A.DESP_FIN) AS LCR_ANTES_IR_CSLL,
+    
+           SUM(A.IR_S_LCR) AS IR_S_LCR,  
+           SUM(A.CS_S_LCR) AS CS_S_LCR,
+    
+           SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) + SUM(A.REC_FIN) +
+            SUM(A.DESP_FIN) + SUM(A.IR_S_LCR) + SUM(A.CS_S_LCR) AS LCR_LIQ,
+    
+           SUM(A.IRPJ_CSLL) AS IRPJ_CSLL,
+    
+           SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) +
+            SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) AS EBIT,
+    
+           SUM(A.DEP_AM_EX) AS DEP_AM_EX,
+    
+           SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) - SUM(A.DEP_AM_EX) AS EBTIDA,
+    
+           SUM(A.AJUSTES) AS AJUSTES,
+           SUM(A.AJUSTES_PERDA) AS AJUSTES_PERDA,
+           SUM(A.AJUSTES_REPASSE) AS AJUSTES_REPASSE,
+    
+            SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) +
+            SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) - SUM(A.DEP_AM_EX) +
+            SUM(A.AJUSTES) AS EBTIDAAJUS,
+    
+           SUM(A.IMPOSTO) AS IMPOSTO,
+           SUM(A.CUSTOS_SER) AS CUSTOS_SER,
+           SUM(A.CUSTOS_IND) AS CUSTOS_IND,
+           SUM(A.DESP_COM) AS DESP_COM,
+           SUM(A.DESP_ADM) AS DESP_ADM,
+           SUM(A.DESP_OUT) AS DESP_OUT,
+           SUM(A.REC_FIN) AS REC_FIN,
+           SUM(A.DESP_FIN) AS DESP_FIN,
+           SUM(A.REPASSE_UNI) AS REPASSE_UNI,
+           0 AS REPASSE
+    
+      FROM CND_DRE2 A
+     WHERE AD_CATEGORIA = 'U' 
+       AND EXISTS(SELECT 1 FROM TSIEMP EMP WHERE EMP.AD_EMPGRUPO = 'S' AND EMP.CODEMP = A.CODEMP)
+       AND CODCENCUS <> 13001000 /*POLO TECNOLOGICO*/
+    
+    GROUP BY A.AD_CONDOMINIO,
+           A.REFERENCIA,
+           A.CODCENCUS,
+           A.NROUNICOBP,
+           A.CTACTB,
+           A.DESCRCTA,
+           A.AD_SKJV2,
+           A.CODPROJ,
+           A.SKJV,
+           A.AD_CATEGORIA,
+           A.CODEMP,
+           A.STATUS,
+           A.CODDIRETORIA,
+           A.DIRETORIA,
+           A.CR_NOVO
+           
+    UNION ALL
+    
+    SELECT SYSDATE AS DTREF,
+           A.AD_CONDOMINIO,
+           A.REFERENCIA,
+           A.CODCENCUS,
+           A.AD_SKJV2,
+           A.NROUNICOBP,
+           A.CTACTB,
+           A.DESCRCTA,
+           A.CODPROJ,
+           A.SKJV,
+           A.AD_CATEGORIA,
+           A.STATUS,
+           A.CODDIRETORIA,
+           A.DIRETORIA,
+           A.CR_NOVO,
+           A.CODEMP,
+           'R' AS ANALISE,
+           
+           SUM(A.REC_BRUT_U) AS REC_BRUT,
+    
+           SUM(A.IMPOSTO) AS V2_DEDUTORES,
+    
+           SUM(A.REPASSE_UNI) + SUM(A.IMPOSTO) AS DEDUTORES,
+    
+           SUM(A.REC_BRUT_U) + SUM(A.IMPOSTO) AS V2_REC_LIQ,
+           
+           SUM(A.REPASSE_UNI) AS DESP_REPASSE,
+    
+           SUM(A.REC_BRUT_U) + SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) AS REC_LIQ,
+    
+           SUM(A.CUSTOS) AS CUSTOS, 
+    
+           SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) AS LCR_BRUTO,
+    
+           SUM(A.DESP_ADM) + SUM(A.DESP_COM) + SUM(A.DESP_OUT) AS DESP_OPER,
+    
+           SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) AS LCR_OPER,
+    
+           SUM(A.REC_FIN) + SUM(A.DESP_FIN) AS RESULTADO_FIN,
+    
+           SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) + SUM(A.REC_FIN) +
+            SUM(A.DESP_FIN) AS LCR_ANTES_IR_CSLL,
+    
+           SUM(A.IR_S_LCR) AS IR_S_LCR,  
+           SUM(A.CS_S_LCR) AS CS_S_LCR,
+    
+           SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) + SUM(A.REC_FIN) +
+            SUM(A.DESP_FIN) + SUM(A.IR_S_LCR) + SUM(A.CS_S_LCR) AS LCR_LIQ,
+    
+           SUM(A.IRPJ_CSLL) AS IRPJ_CSLL,
+    
+           SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) +
+            SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) AS EBIT,
+    
+           SUM(A.DEP_AM_EX) AS DEP_AM_EX,
+    
+           SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) - SUM(A.DEP_AM_EX) AS EBTIDA,
+    
+           SUM(A.AJUSTES) AS AJUSTES,
+           SUM(A.AJUSTES_PERDA) AS AJUSTES_PERDA,
+           SUM(A.AJUSTES_REPASSE) AS AJUSTES_REPASSE,
+    
+            SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) +
+            SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+            SUM(A.DESP_COM) + SUM(A.DESP_OUT) - SUM(A.DEP_AM_EX) +
+            SUM(A.AJUSTES)  AS EBTIDAAJUS,
+    
+           SUM(A.IMPOSTO) AS IMPOSTO,
+           SUM(A.CUSTOS_SER) AS CUSTOS_SER,
+           SUM(A.CUSTOS_IND) AS CUSTOS_IND,
+           SUM(A.DESP_COM) AS DESP_COM,
+           SUM(A.DESP_ADM) AS DESP_ADM,
+           SUM(A.DESP_OUT) AS DESP_OUT,
+           SUM(A.REC_FIN) AS REC_FIN,
+           SUM(A.DESP_FIN) AS DESP_FIN,
+           SUM(A.REPASSE_UNI) AS REPASSE_UNI,
+           0 AS REPASSE
+    
+      FROM CND_DRE2 A
+     WHERE AD_CATEGORIA = 'U' 
+       AND EXISTS(SELECT 1 FROM TSIEMP EMP WHERE NVL(EMP.AD_EMPGRUPO,'N') = 'N' AND EMP.CODEMP = A.CODEMP) 
+       AND CODCENCUS <> 13001000 /*POLO TECNOLOGICO*/
+    
+    GROUP BY A.AD_CONDOMINIO,
+           A.REFERENCIA,
+           A.CODCENCUS,
+           A.NROUNICOBP,
+           A.CTACTB,
+           A.DESCRCTA,
+           A.AD_SKJV2,
+           A.CODPROJ,
+           A.SKJV,
+           A.AD_CATEGORIA,
+           A.CODEMP,
+           A.STATUS,
+           A.CODDIRETORIA,
+           A.DIRETORIA,
+           A.CR_NOVO
+           
+    UNION ALL
+    
+    SELECT SYSDATE AS DTREF,
+       A.AD_CONDOMINIO,
+       A.REFERENCIA,
+       A.CODCENCUS,
+       A.AD_SKJV2,
+       A.NROUNICOBP,
+       A.CTACTB,
+       A.DESCRCTA,
+       A.CODPROJ,
+       A.SKJV,
+       A.AD_CATEGORIA,
+       A.STATUS,
+       A.CODDIRETORIA,
+       A.DIRETORIA,
+       A.CR_NOVO,
+       A.CODEMP,
+       'P' AS ANALISE,
+       
+       SUM(A.REC_BRUT_U) AS REC_BRUT,
+
+       SUM(A.IMPOSTO) AS V2_DEDUTORES,
+
+       SUM(A.REPASSE_UNI) + SUM(A.IMPOSTO) AS DEDUTORES,
+
+       SUM(A.REC_BRUT_U) + SUM(A.IMPOSTO) AS V2_REC_LIQ,
+       
+       SUM(A.REPASSE_UNI) AS DESP_REPASSE,
+
+       SUM(A.REC_BRUT_U) + SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) AS REC_LIQ,
+
+       SUM(A.CUSTOS) AS CUSTOS, 
+
+       SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) AS LCR_BRUTO,
+
+       SUM(A.DESP_ADM) + SUM(A.DESP_COM) + SUM(A.DESP_OUT) AS DESP_OPER,
+
+       SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+        SUM(A.DESP_COM) + SUM(A.DESP_OUT) AS LCR_OPER,
+
+       SUM(A.REC_FIN) + SUM(A.DESP_FIN) AS RESULTADO_FIN,
+
+       SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+        SUM(A.DESP_COM) + SUM(A.DESP_OUT) + SUM(A.REC_FIN) +
+        SUM(A.DESP_FIN) AS LCR_ANTES_IR_CSLL,
+
+       SUM(A.IR_S_LCR) AS IR_S_LCR,  
+       SUM(A.CS_S_LCR) AS CS_S_LCR,
+
+       SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+        SUM(A.DESP_COM) + SUM(A.DESP_OUT) + SUM(A.REC_FIN) +
+        SUM(A.DESP_FIN) + SUM(A.IR_S_LCR) + SUM(A.CS_S_LCR) AS LCR_LIQ,
+
+       SUM(A.IRPJ_CSLL) AS IRPJ_CSLL,
+
+       SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) +
+        SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+        SUM(A.DESP_COM) + SUM(A.DESP_OUT) AS EBIT,
+
+       SUM(A.DEP_AM_EX) AS DEP_AM_EX,
+
+       SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) + SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+        SUM(A.DESP_COM) + SUM(A.DESP_OUT) - SUM(A.DEP_AM_EX) AS EBTIDA,
+
+       SUM(A.AJUSTES) AS AJUSTES,
+       SUM(A.AJUSTES_PERDA) AS AJUSTES_PERDA,
+       SUM(A.AJUSTES_REPASSE) AS AJUSTES_REPASSE,
+
+        SUM(A.REC_BRUT_U)+SUM(A.IMPOSTO) +
+        SUM(A.REPASSE_UNI) + SUM(A.CUSTOS) + SUM(A.DESP_ADM) +
+        SUM(A.DESP_COM) + SUM(A.DESP_OUT) - SUM(A.DEP_AM_EX) +
+        SUM(A.AJUSTES)  AS EBTIDAAJUS,
+
+       SUM(A.IMPOSTO) AS IMPOSTO,
+       SUM(A.CUSTOS_SER) AS CUSTOS_SER,
+       SUM(A.CUSTOS_IND) AS CUSTOS_IND,
+       SUM(A.DESP_COM) AS DESP_COM,
+       SUM(A.DESP_ADM) AS DESP_ADM,
+       SUM(A.DESP_OUT) AS DESP_OUT,
+       SUM(A.REC_FIN) AS REC_FIN,
+       SUM(A.DESP_FIN) AS DESP_FIN,
+       SUM(A.REPASSE_UNI) AS REPASSE_UNI,
+       0 AS REPASSE
+
+  FROM CND_DRE2 A
+ WHERE CODCENCUS = 13001000 /*POLO TECNOLOGICO*/
+   AND CODEMP = 21
+
+GROUP BY A.AD_CONDOMINIO,
+       A.REFERENCIA,
+       A.CODCENCUS,
+       A.NROUNICOBP,
+       A.CTACTB,
+       A.DESCRCTA,
+       A.AD_SKJV2,
+       A.CODPROJ,
+       A.SKJV,
+       A.AD_CATEGORIA,
+       A.CODEMP,
+       A.STATUS,
+       A.CODDIRETORIA,
+       A.DIRETORIA,
+       A.CR_NOVO
