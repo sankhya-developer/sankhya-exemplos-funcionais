@@ -1,0 +1,812 @@
+<gadget>
+  <prompt-parameters>
+    <parameter id="PERIODO" description="Ex. Período" metadata="datePeriod" required="true" keep-last="true" keep-date="false" order="0"/>
+    <parameter id="CIDADE" description="Cidade" metadata="entity:Cidade@CODCID" required="false" keep-last="true" keep-date="false"/>
+    <parameter id="a_empresa" description="Ex. Single list" metadata="singleList:Text" listType="text" required="false" keep-last="false" keep-date="false" order="1">
+      <item value="1" label="Sankhya"/>
+      <item value="2" label="Jiva"/>
+      <item value="3" label="Maha"/>
+      <item value="4" label="Lojista"/>
+    </parameter>
+    <parameter id="EMPRESA" description="Ex. Multi List" metadata="multiList:Text" listType="text" required="false" keep-last="false" keep-date="false" order="2">
+      <item value="1" label="Sankhya"/>
+      <item value="2" label="Jiva"/>
+      <item value="3" label="Maha"/>
+      <item value="4" label="Lojista"/>
+    </parameter>
+    <parameter id="Parceiro" description="Ex. Entidade/Tabela" metadata="entity:Parceiro@CODPARC" required="false" keep-last="false" keep-date="false" order="3"/>
+    <parameter id="VOUF" description="Ex. Verdadeiro ou Falso" metadata="boolean" required="false" keep-last="false" keep-date="false" default="false" order="4"/>
+  </prompt-parameters>
+  <local-vars>
+    <var id="BR">
+      <expression type="sql" data-source="MGEDS"><![CDATA[SELECT '<br>' AS BRFROM DUAL]]></expression>
+    </var>
+    <var id="G_IMG">
+      <expression type="sql" data-source="MGEDS"><![CDATA[SELECT '<center> <img src="https://www.sankhya.com.br/wp-content/uploads/2021/07/logo-horizontal-primary-color-dark.svg">' AS IMGFROM DUAL]]></expression>
+    </var>
+    <var id="IMG">
+      <expression type="sql" data-source="MGEDS"><![CDATA[SELECT '<center> <img src="https://www.sankhya.com.br/wp-content/uploads/2018/08/logo.png">' AS IMGFROM DUAL]]></expression>
+    </var>
+    <var id="HR">
+      <expression type="sql" data-source="MGEDS"><![CDATA[SELECT '<hr>' AS HRFROM DUAL]]></expression>
+    </var>
+    <var id="GEO_IMG">
+      <expression type="sql" data-source="MGEDS"><![CDATA[SELECT '<center> <img width=80% src="http://www.sankhya.com.br/wp-content/themes/sankhya/assets/images/logo-hq.png">' AS IMGFROM DUAL]]></expression>
+    </var>
+  </local-vars>
+  <level id="lvl_puhea3" description="Links">
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="107">
+        <simple-value id="svl_q93v9u">
+          <value-expression><![CDATA[$G_IMG<hr>]]></value-expression>
+        </simple-value>
+      </container>
+      <container orientacao="H" tamanhoRelativo="246">
+        <container orientacao="V" tamanhoRelativo="180">
+          <container orientacao="V" tamanhoRelativo="20">
+            <simple-value id="svl_q93v90">
+              <value-expression><![CDATA[<center><table border=1 bordercolor='#43A047'><tr height=40><td align=center width=200> Geográfico </td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_puheub"/>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="20">
+            <simple-value id="svl_q93v91">
+              <value-expression><![CDATA[<center><table border=1 bordercolor='#43A047'><tr height=40><td align=center width=200> Colunas e Área </td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_a84t2y"/>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="20">
+            <simple-value id="svl_q93v92">
+              <value-expression><![CDATA[<center><table border=1 bordercolor='#43A047'><tr height=40><td align=center width=200> Pizza e Donut </td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_puhed5"/>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="20">
+            <simple-value id="svl_q93v93">
+              <value-expression><![CDATA[<center><table border=1 bordercolor='#43A047'><tr height=40><td align=center width=200> TreeMap </td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_qy9ui6"/>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="20">
+            <simple-value id="svl_q93v94">
+              <value-expression><![CDATA[<center><table border=1 bordercolor='#43A047'><tr height=40><td align=center width=200> Tabela </td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_ll9sw1"/>
+            </simple-value>
+          </container>
+        </container>
+        <container orientacao="V" tamanhoRelativo="109">
+          <container orientacao="V" tamanhoRelativo="20">
+            <simple-value id="svl_ajz78vi">
+              <value-expression><![CDATA[<center><table border=1 bordercolor='#43A047'><tr height=40><td align=center width=200> Intervalo de área </td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_ajz78vj"/>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="20">
+            <simple-value id="svl_a5xvvin">
+              <value-expression><![CDATA[<center><table border=1 bordercolor='#43A047'><tr height=40><td align=center width=200> Dispersão </td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_a5xvvio"/>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="20">
+            <simple-value id="svl_alwazue">
+              <value-expression><![CDATA[<center><table border=1 bordercolor='#43A047'><tr height=40><td align=center width=200> HTML 5 </td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_aj25tu9"/>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="20">
+            <simple-value id="svl_a5xvv0h">
+              <value-expression><![CDATA[<center><table border=1 bordercolor='#43A047'><tr height=40><td align=center width=200> Radar</td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_as4daho"/>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="20">
+            <simple-value id="svl_h07j17">
+              <value-expression><![CDATA[<center><table border=1 bordercolor='#43A047'><tr height=40><td align=center width=200>Funil</td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_15wfbr"/>
+            </simple-value>
+          </container>
+        </container>
+        <container orientacao="V" tamanhoRelativo="171">
+          <container orientacao="V" tamanhoRelativo="20">
+            <simple-value id="svl_q93v95">
+              <value-expression><![CDATA[<center><table border=1 bordercolor='#43A047'><tr height=40><td align=center width=200> Geomapa </td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_qy9us2"/>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="20">
+            <simple-value id="svl_q93v96">
+              <value-expression><![CDATA[<center><table border=1 bordercolor='#43A047'><tr height=40><td align=center width=200> Bolha </td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_qy9t78"/>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="20">
+            <simple-value id="svl_q93v97">
+              <value-expression><![CDATA[<center><table border=1 bordercolor='#43A047'><tr height=40><td align=center width=200> Velocimetro </td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_puhemb"/>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="20">
+            <simple-value id="svl_q93v98">
+              <value-expression><![CDATA[<center><table border=1 bordercolor='#43A047'><tr height=40><td align=center width=200> Análise de Rentabilidade </td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_puhehu"/>
+            </simple-value>
+          </container>
+          <container orientacao="V" tamanhoRelativo="20">
+            <simple-value id="svl_q93v99">
+              <value-expression><![CDATA[<center><table border=1 bordercolor='#43A047'><tr height=40><td align=center width=200> Tabela Dinâmica </td></tr></table></center>]]></value-expression>
+              <on-click navigate-to="lvl_ll9sy4"/>
+            </simple-value>
+          </container>
+        </container>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_a84t2y" description="Coluna e area">
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="134">
+        <simple-value id="svl_rcdt7b">
+          <value-expression><![CDATA[ $IMG <hr>]]></value-expression>
+        </simple-value>
+      </container>
+      <container orientacao="H" tamanhoRelativo="486">
+        <container orientacao="V" tamanhoRelativo="50">
+          <chart id="cht_rdc8lm" type="column">
+            <expression type="sql" data-source="MGEDS"><![CDATA[SELECTSUM(CAB.VLRNOTA) AS FAT,SUM(CAB.VLRNOTA)*0.1 AS LUCRO,SUM(CAB.VLRNOTA)*0.9 AS CMVGVGF,COUNT(DISTINCT CAB.CODPARC) AS QTDPAR,SUM(CAB.VLRNOTA)/COUNT(DISTINCT CAB.CODPARC) AS TICKET,TO_CHAR(CAB.DTNEG,'Mon/YYYY') AS PER,TO_CHAR(CAB.DTNEG,'YYYYMM') AS ORDEM,'Quantidade de Clientes: ' AS AA,'Ticket Médio: ' AS BBFROM TGFCAB CABWHERE CAB.DTNEG BETWEEN :PERIODO.INI AND :PERIODO.FIN  AND CAB.TIPMOV = 'P'  AND CAB.STATUSNOTA = 'L'GROUP BY TO_CHAR(CAB.DTNEG,'Mon/YYYY'),         TO_CHAR(CAB.DTNEG,'YYYYMM')ORDER BY ORDEM]]></expression>
+            <metadata>
+              <field name="FAT" label="Valor" type="I" visible="true" useFooter="false" mask="#.##0,00"/>
+              <field name="LUCRO" label="Valor" type="I" visible="true" useFooter="false" mask="#.##0,00"/>
+              <field name="CMVGVGF" label="Valor" type="I" visible="true" useFooter="false" mask="#.##0,00"/>
+              <field name="QTDPAR" label="Quantidade" type="I" visible="true" useFooter="false" mask="#.##0"/>
+              <field name="TICKET" label="Valor" type="I" visible="true" useFooter="false" mask="#.##0,00"/>
+              <field name="PER" label="Referência" type="S" visible="true" useFooter="false"/>
+              <field name="ORDEM" label="ORDEM" type="S" visible="true" useFooter="false"/>
+              <field name="AA" label="AA" type="S" visible="true" useFooter="false"/>
+              <field name="BB" label="BB" type="S" visible="true" useFooter="false"/>
+            </metadata>
+            <horizontal-axis>
+              <category field="PER" rotation="-45" dropLabel="false"/>
+            </horizontal-axis>
+            <vertical-axis>
+              <linear resultRotation="0" vResizing="false">
+                <mask/>
+              </linear>
+            </vertical-axis>
+            <series>
+              <set type="stacked">
+                <serie type="column">
+                  <xField>$PER</xField>
+                  <yField>$CMVGVGF</yField>
+                  <display><![CDATA[Custos e despesas $HR $AA $QTDPAR $BR $BB $TICKET]]></display>
+                  <color>0x607d8b</color>
+                </serie>
+                <serie type="column">
+                  <xField>$PER</xField>
+                  <yField>$LUCRO</yField>
+                  <display><![CDATA[Lucro $HR $AA $QTDPAR $BR $BB $TICKET]]></display>
+                  <color>0x2196f3</color>
+                </serie>
+              </set>
+              <serie type="line" circle-intersection="true">
+                <xField>$PER</xField>
+                <yField secondaryScale="true" scaleSuffix="1">$FAT</yField>
+                <display><![CDATA[Faturamento Total $HR $AA $QTDPAR $BR $BB $TICKET]]></display>
+                <color>0x0</color>
+              </serie>
+            </series>
+            <legend position="bottom" direction="h"/>
+          </chart>
+        </container>
+        <container orientacao="V" tamanhoRelativo="50">
+          <chart id="cht_rdc8tw" type="area">
+            <expression type="sql" data-source="MGEDS"><![CDATA[SELECTSUM(CAB.VLRNOTA)*0.5 AS VALOR,SUM(CAB.VLRNOTA)*0.3 AS VALOR2,SUM(CAB.VLRNOTA)*0.15 AS VALOR3,SUM(CAB.VLRNOTA)*0.05 AS VALOR4,COUNT(DISTINCT CAB.CODPARC) AS QTDPAR,SUM(CAB.VLRNOTA)/COUNT(DISTINCT CAB.CODPARC) AS TICKET,TO_CHAR(CAB.DTNEG,'Mon/YYYY') AS PER,TO_CHAR(CAB.DTNEG,'YYYYMM') AS ORDEM,'Quantidade de Clientes: ' AS AA,'Ticket Médio: ' AS BBFROM TGFCAB CABWHERE CAB.DTNEG BETWEEN :PERIODO.INI AND :PERIODO.FIN  AND CAB.TIPMOV = 'P'  AND CAB.STATUSNOTA = 'L'GROUP BY TO_CHAR(CAB.DTNEG,'Mon/YYYY'),         TO_CHAR(CAB.DTNEG,'YYYYMM')ORDER BY ORDEM]]></expression>
+            <metadata>
+              <field name="VALOR" label="Valor" type="F" visible="true" useFooter="false" mask="#.##0,00"/>
+              <field name="VALOR2" label="Valor" type="F" visible="true" useFooter="false" mask="#.##0,00"/>
+              <field name="VALOR3" label="Valor" type="F" visible="true" useFooter="false" mask="#.##0,00"/>
+              <field name="VALOR4" label="Valor" type="F" visible="true" useFooter="false" mask="#.##0,00"/>
+              <field name="QTDPAR" label="QTDPAR" type="I" visible="true" useFooter="false" mask="#.##0"/>
+              <field name="TICKET" label="TICKET" type="I" visible="true" useFooter="false" mask="#.##0,00"/>
+              <field name="PER" label="Referência" type="S" visible="true" useFooter="false"/>
+              <field name="ORDEM" label="ORDEM" type="S" visible="true" useFooter="false"/>
+              <field name="AA" label="AA" type="S" visible="true" useFooter="false"/>
+              <field name="BB" label="BB" type="S" visible="true" useFooter="false"/>
+            </metadata>
+            <horizontal-axis>
+              <category field="PER" rotation="-45" dropLabel="false"/>
+            </horizontal-axis>
+            <vertical-axis>
+              <linear resultRotation="0">
+                <mask/>
+              </linear>
+            </vertical-axis>
+            <series>
+              <serie type="area">
+                <xField>$PER</xField>
+                <yField>$VALOR</yField>
+                <display><![CDATA[Grupo 1 $HR $AA $QTDPAR $BR $BB $TICKET]]></display>
+                <color>0x4db6ac</color>
+              </serie>
+              <serie type="area">
+                <xField>$PER</xField>
+                <yField>$VALOR2</yField>
+                <display><![CDATA[Grupo 2 $HR $AA $QTDPAR $BR $BB $TICKET]]></display>
+                <color>0xe0e0e0</color>
+              </serie>
+              <serie type="area">
+                <xField>$PER</xField>
+                <yField>$VALOR3</yField>
+                <display><![CDATA[Grupo 3 $HR $AA $QTDPAR $BR $BB $TICKET]]></display>
+                <color>0xaed581</color>
+              </serie>
+              <serie type="area">
+                <xField>$PER</xField>
+                <yField>$VALOR4</yField>
+                <display><![CDATA[Grupo 4  $HR $AA $QTDPAR $BR $BB $TICKET]]></display>
+                <color>0xffcc80</color>
+              </serie>
+            </series>
+            <legend position="bottom" direction="h"/>
+          </chart>
+        </container>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_ll9sw1" description="Tabela">
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="120">
+        <simple-value id="svl_ll9sw2">
+          <value-expression><![CDATA[<center> $IMG ]]></value-expression>
+        </simple-value>
+      </container>
+      <container orientacao="V" tamanhoRelativo="645">
+        <grid id="grd_ll9sw3" useNewGrid="S">
+          <expression type="sql" data-source="MGEDS"><![CDATA[SELECTCASE WHEN ROWNUM = 1 THEN 'GOLD' WHEN ROWNUM = 2 THEN 'SILVER' WHEN ROWNUM = 3 THEN '#A67D3D' ELSE '#BBDEFB' END AS COR,'<span style="color: #2196F3;">'||ROWNUM||'º'||'</span>' AS RANKING,CODCID,'<span style="color: #669900;">'||NOMECID||'</span>' AS NOMECID,QTDPAR,QTD,VALOR,RATIO,ACUMULADOFROM(  SELECT  CODCID,  NOMECID,  SUM(VALOR) AS VALOR,  SUM(QTD) AS QTD,  SUM(QTDPAR) AS QTDPAR,  SUM(RATIO) AS RATIO,  SUM(SUM(RATIO)) OVER (ORDER BY 3 DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS ACUMULADO  FROM    (    SELECT    CID.CODCID,    CID.NOMECID,    SUM (CAB.VLRNOTA) AS VALOR,    RATIO_TO_REPORT(SUM (CAB.VLRNOTA)) OVER() *100 AS RATIO,    COUNT(DISTINCT CAB.NUNOTA) AS QTD,    COUNT(DISTINCT CAB.CODPARC) AS QTDPAR              FROM TGFCAB CAB    , TGFPAR PAR    , TSICID CID    , TGFTOP TPO    , VGFCAB VCAB    WHERE CAB.TIPMOV = 'P'    AND VCAB.NUNOTA= CAB.NUNOTA    AND TPO.GOLSINAL= -1    AND CAB.DTNEG BETWEEN :PERIODO.INI AND :PERIODO.FIN    AND CAB.CODPARC = PAR.CODPARC    AND CAB.CODTIPOPER = TPO.CODTIPOPER    AND CAB.DHTIPOPER = TPO.DHALTER    AND PAR.CODCID = CID.CODCID    GROUP BY CID.CODCID, CID.NOMECID  ORDER BY 3 DESC  )A  GROUP BY  CODCID,  NOMECID  ORDER BY 3 DESC)B  ]]></expression>
+          <metadata>
+            <field name="COR" label="Medalha" type="LP" visible="true" useFooter="false"/>
+            <field name="RANKING" label="Ranking" type="S" visible="true" useFooter="false"/>
+            <field name="CODCID" label="CODCID" type="I" visible="false" useFooter="false"/>
+            <field name="NOMECID" label="Cidade" type="S" visible="true" useFooter="false"/>
+            <field name="QTDPAR" label="Qtd. Clientes" type="I" visible="true" useFooter="AVG" mask="#.##0"/>
+            <field name="QTD" label="Qtd. Negociações" type="I" visible="true" useFooter="MAX" mask="#.##0"/>
+            <field name="VALOR" label="Valor" type="F" visible="true" useFooter="true" mask="R$ #.##0,00"/>
+            <field name="RATIO" label="Representa" type="F" visible="true" useFooter="true" mask="#.##0,00 %"/>
+            <field name="ACUMULADO" label="Representa Acumulado" type="F" visible="true" useFooter="false" mask="#.##0,00 %"/>
+            <field name="TICKET" label="Ticket Médio" type="F" visible="true" useFooter="AVG" mask="R$ #.##0,00">
+              <calculated>
+                <formula><![CDATA[$VALOR/$QTDPAR]]></formula>
+              </calculated>
+            </field>
+          </metadata>
+        </grid>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_ll9sy4" description="Tabela Dinâmica">
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="145">
+        <simple-value id="svl_ll9sy5">
+          <value-expression><![CDATA[<center> $IMG]]></value-expression>
+        </simple-value>
+      </container>
+      <container orientacao="V" tamanhoRelativo="690">
+        <pivot-table id="pvt_ll9sy7">
+          <expression type="sql" data-source="MGEDS"><![CDATA[    SELECT    CID.NOMECID,    UFS.DESCRICAO AS ESTADO,    PAI.DESCRICAO AS PAIS,    NAT.DESCRNAT,    CUS.DESCRCENCUS,    TO_CHAR(CAB.DTNEG, 'YYYY/MM') AS PER,    SUM(CAB.VLRNOTA) AS VALOR    FROM TGFCAB CAB    , TGFPAR PAR    , TSICID CID    , TSIUFS UFS    , TSIPAI PAI    , TGFTOP TPO    , TGFNAT NAT    , TSICUS CUS    WHERE TPO.GOLSINAL= -1    AND CAB.DTNEG BETWEEN :PERIODO.INI AND :PERIODO.FIN    AND CAB.CODNAT = NAT.CODNAT    AND CAB.CODCENCUS = CUS.CODCENCUS    AND CAB.CODPARC = PAR.CODPARC    AND CAB.CODTIPOPER = TPO.CODTIPOPER    AND CAB.DHTIPOPER = TPO.DHALTER    AND PAR.CODCID = CID.CODCID    AND CID.UF = UFS.CODUF    AND UFS.CODPAIS = PAI.CODPAIS    GROUP BY CID.NOMECID, UFS.DESCRICAO, PAI.DESCRICAO, NAT.DESCRNAT, CUS.DESCRCENCUS, TO_CHAR(CAB.DTNEG, 'YYYY/MM')]]></expression>
+          <metadata>
+            <field name="NOMECID" label="Cidade" type="S" visible="true" useFooter="false"/>
+            <field name="ESTADO" label="Estado" type="S" visible="true" useFooter="false"/>
+            <field name="PAIS" label="País" type="S" visible="true" useFooter="false"/>
+            <field name="DESCRNAT" label="Natureza" type="S" visible="true" useFooter="false"/>
+            <field name="DESCRCENCUS" label="CR" type="S" visible="true" useFooter="false"/>
+            <field name="PER" label="Data" type="S" visible="true" useFooter="false"/>
+            <field name="VALOR" label="Vendas" type="I" visible="true" useFooter="false"/>
+          </metadata>
+        </pivot-table>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_puhed5" description="Pizza / Dunot">
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="114">
+        <simple-value id="svl_puhed7">
+          <expression type="sql" data-source="MGEDS"><![CDATA[   SELECT 1 from dual]]></expression>
+          <metadata>
+            <field name="1" label="1" type="I" visible="true" useFooter="false"/>
+          </metadata>
+          <value-expression><![CDATA[<center> $IMG ]]></value-expression>
+        </simple-value>
+      </container>
+      <container orientacao="H" tamanhoRelativo="566">
+        <container orientacao="V" tamanhoRelativo="50">
+          <chart id="cht_puhed9" type="donut">
+            <expression type="sql" data-source="MGEDS"><![CDATA[SELECTCOUNT(PAR.CODPARC) AS QTD,OPC.OPCAOFROM TGFPAR PARINNER JOIN TDDOPC OPC ON OPC.NUCAMPO = 9999990841 AND PAR.AD_SEG_PRINC = OPC.VALORGROUP BY OPC.OPCAO]]></expression>
+            <metadata>
+              <field name="QTD" label="Quantidade" type="I" visible="true" useFooter="false"/>
+              <field name="OPCAO" label="Segmento" type="S" visible="true" useFooter="false"/>
+            </metadata>
+            <series>
+              <serie type="donut">
+                <field>QTD</field>
+                <nameField>OPCAO</nameField>
+                <tipoDonut>completo</tipoDonut>
+              </serie>
+            </series>
+          </chart>
+        </container>
+        <container orientacao="V" tamanhoRelativo="50">
+          <chart id="cht_puhed8" type="pizza">
+            <expression type="sql" data-source="MGEDS"><![CDATA[SELECTCOUNT(PAR.CODPARC) AS QTD,OPC.OPCAOFROM TGFPAR PARINNER JOIN TDDOPC OPC ON OPC.NUCAMPO = 9999990841 AND PAR.AD_SEG_PRINC = OPC.VALORGROUP BY OPC.OPCAO]]></expression>
+            <metadata>
+              <field name="QTD" label="Quantidade" type="I" visible="true" useFooter="false"/>
+              <field name="OPCAO" label="Segmento" type="S" visible="true" useFooter="false"/>
+            </metadata>
+            <series>
+              <serie type="pizza">
+                <field>QTD</field>
+                <nameField>OPCAO</nameField>
+              </serie>
+            </series>
+          </chart>
+        </container>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_puhehu" description="Rentabilidade">
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="100">
+        <simple-value id="svl_puhehw">
+          <expression type="sql" data-source="MGEDS"><![CDATA[select 1 from dual]]></expression>
+          <metadata>
+            <field name="1" label="1" type="I" visible="true" useFooter="false"/>
+          </metadata>
+          <value-expression><![CDATA[<center> $IMG ]]></value-expression>
+        </simple-value>
+      </container>
+      <container orientacao="V" tamanhoRelativo="502">
+        <chart id="cht_puhehx" type="analise-rentabilidade">
+          <legend/>
+          <fat>
+            <expression type="sql" data-source="MGEDS"><![CDATA[SELECT 10000 AS VALORFROM DUAL]]></expression>
+          </fat>
+          <cmv>
+            <expression type="sql" data-source="MGEDS"><![CDATA[SELECT 3000 AS VALORFROM DUAL]]></expression>
+          </cmv>
+          <gv>
+            <expression type="sql" data-source="MGEDS"><![CDATA[SELECT 4000 AS VALORFROM DUAL]]></expression>
+          </gv>
+          <gf>
+            <expression type="sql" data-source="MGEDS"><![CDATA[SELECT 2000 AS VALORFROM DUAL]]></expression>
+          </gf>
+          <mc/>
+          <resultado>
+            <expression type="sql" data-source="MGEDS"><![CDATA[SELECT 1000 AS VALORFROM DUAL]]></expression>
+          </resultado>
+        </chart>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_puhemb" description="Velocimetro">
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="313">
+        <simple-value id="svl_puhens" tamTexto="18">
+          <args>
+            <arg id="ARG" type="text"/>
+            <arg id="DESCRICAO" type="text"/>
+          </args>
+          <expression type="sql" data-source="MGEDS"><![CDATA[SELECT CASE WHEN :ARG IS NULL THEN 'Market Share' ELSE 'Market Share: '||:DESCRICAO END AS TTFROM DUAL]]></expression>
+          <metadata>
+            <field name="TT" label="TT" type="S" visible="true" useFooter="false"/>
+          </metadata>
+          <value-expression><![CDATA[<center> $IMG<span style='color: #0000CC;'><b>$TT</b></span>]]></value-expression>
+        </simple-value>
+      </container>
+      <container orientacao="H" tamanhoRelativo="913">
+        <container orientacao="V" tamanhoRelativo="50">
+          <chart id="cht_puhemc" type="pizza">
+            <expression type="sql" data-source="MGEDS"><![CDATA[SELECTCOUNT(PAR.CODPARC) AS QTD,OPC.OPCAO,PAR.AD_SEG_PRINCFROM TGFPAR PARINNER JOIN TDDOPC OPC ON OPC.NUCAMPO = 9999990841 AND PAR.AD_SEG_PRINC = OPC.VALORGROUP BY OPC.OPCAO, PAR.AD_SEG_PRINC]]></expression>
+            <metadata>
+              <field name="QTD" label="Quantidade" type="I" visible="true" useFooter="false" mask="#.##0"/>
+              <field name="OPCAO" label="OPCAO" type="S" visible="true" useFooter="false"/>
+              <field name="AD_SEG_PRINC" label="Segmento" type="S" visible="true" useFooter="false"/>
+            </metadata>
+            <series>
+              <serie type="pizza">
+                <field>QTD</field>
+                <nameField>OPCAO</nameField>
+                <refresh-details ui-list="svl_puhens,cht_puhemd">
+                  <param id="ARG">$AD_SEG_PRINC</param>
+                  <param id="DESCRICAO">$OPCAO</param>
+                </refresh-details>
+              </serie>
+            </series>
+          </chart>
+        </container>
+        <container orientacao="V" tamanhoRelativo="50">
+          <chart id="cht_puhemd" type="gauge">
+            <args>
+              <arg id="ARG" type="text"/>
+              <arg id="DESCRICAO" type="text"/>
+            </args>
+            <expression type="sql" data-source="MGEDS"><![CDATA[SELECT   (CASE             WHEN SUM (1) <> 0             THEN                  SUM (                     CASE WHEN RES.ESCALA BETWEEN 9 AND 10 THEN 1 ELSE 0 END)                / SUM (1)                             ELSE                0          END)       - (CASE             WHEN SUM (1) <> 0             THEN                  COUNT (CASE WHEN RES.ESCALA BETWEEN 0 AND 6 THEN 1 END)                / SUM (1)                             ELSE                0          END) + 0.5          AS VALOR  FROM AD_PESRES RES        INNER JOIN AD_PESCON CON ON CON.CODCONT = RES.CODCONT       LEFT JOIN TGFPAR PAR ON CON.CODPARC = PAR.CODPARC WHERE     RES.CODPERG = 1400 AND (PAR.AD_SEG_PRINC = :ARG OR :ARG IS NULL)]]></expression>
+            <metadata>
+              <field name="VALOR" label="VALOR" type="F" visible="true" useFooter="false" mask="#.##0,00 %"/>
+            </metadata>
+            <show-ticks>false</show-ticks>
+            <min-value>0</min-value>
+            <max-value>100</max-value>
+            <value-field>$VALOR</value-field>
+            <alert-colors values="0,50,75,100" colors="0x990000,0xffcc00,0x669900"/>
+          </chart>
+        </container>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_puheub" description="Geográfico">
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="207">
+        <simple-value id="svl_puhevu">
+          <expression type="sql" data-source="MGEDS"><![CDATA[SELECTNVL(:ABREVIATURA, 'Todos') AS PAIS,NVL(:UF, 'Todos') AS UF,NVL(:NOMECID, 'Todos') AS CIDADE,NVL(:DESCRPROD, 'Todos') AS PRODUTO,NVL(:APELIDO, 'Todos') AS VENDEDOR,NVL(:NOMEPARC, 'Todos') AS PARCEIRO,PERINI,PERFIN,VALOR,QTD,QTDPAR,VALOR/QTD AS TICKET  FROM(    SELECT  TO_CHAR(:PERIODO.INI, 'DD/MM/YYYY') AS PERINI,  TO_CHAR(:PERIODO.FIN, 'DD/MM/YYYY') AS PERFIN,  SUM (CAB.VLRNOTA) AS VALOR,  COUNT(DISTINCT CAB.NUNOTA) AS QTD,   COUNT(DISTINCT CAB.CODPARC) AS QTDPAR          FROM TGFCAB CAB  , TGFPAR PAR   , TSICID CID   , TSIUFS UFS   , TSIPAI PAI  , TGFTOP TPO  WHERE TPO.GOLSINAL= -1  AND CAB.DTNEG BETWEEN :PERIODO.INI AND :PERIODO.FIN  AND CAB.CODPARC = PAR.CODPARC  AND CAB.CODTIPOPER = TPO.CODTIPOPER  AND CAB.DHTIPOPER = TPO.DHALTER  AND PAR.CODCID = CID.CODCID  AND CID.UF = UFS.CODUF  AND UFS.CODPAIS = PAI.CODPAIS)A]]></expression>
+          <metadata>
+            <field name="PAIS" label="PAIS" type="S" visible="true" useFooter="false"/>
+            <field name="UF" label="UF" type="S" visible="true" useFooter="false"/>
+            <field name="CIDADE" label="CIDADE" type="S" visible="true" useFooter="false"/>
+            <field name="PRODUTO" label="PRODUTO" type="S" visible="true" useFooter="false"/>
+            <field name="VENDEDOR" label="VENDEDOR" type="S" visible="true" useFooter="false"/>
+            <field name="PARCEIRO" label="PARCEIRO" type="S" visible="true" useFooter="false"/>
+            <field name="PERINI" label="PERINI" type="S" visible="true" useFooter="false"/>
+            <field name="PERFIN" label="PERFIN" type="S" visible="true" useFooter="false"/>
+            <field name="VALOR" label="VALOR" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+            <field name="QTD" label="QTD" type="F" visible="true" useFooter="false" mask="#.##0"/>
+            <field name="QTDPAR" label="QTDPAR" type="F" visible="true" useFooter="false" mask="#.##0"/>
+            <field name="TICKET" label="TICKET" type="I" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+          </metadata>
+          <value-expression><![CDATA[<center><big>Referência: <span style='color: #3f51b5;'>$PERINI</span> até <span style='color: #3f51b5;'>$PERFIN</span>País: <span style='color: #3f51b5;'>$PAIS</span> - Região: <span style='color: #3f51b5;'>$UF</span> - Cidade: <span style='color: #3f51b5;'>$CIDADE</span> - Produto: <span style='color: #3f51b5;'>$PRODUTO</span> - Vendedor: <span style='color: #3f51b5;'>$VENDEDOR</span> - Parceiro: <span style='color: #3f51b5;'>$PARCEIRO</span><table class="tg" width = 60%>  <tr>    <th class="tg-f8tx" width = 12%><span style='color: #388e3c;'>Clientes Atendidos</span></th>    <th class="tg-f8tx" width = 12%><span style='color: #388e3c;'>Valor Total</span></th>    <th class="tg-f8tx" width = 12%><span style='color: #388e3c;'>Quantidade</span> </th>    <th class="tg-f8tx" width = 12%><span style='color: #388e3c;'>Ticket Médio</span></th>  </tr>  <tr>    <td align=center>$QTDPAR</td>    <td align=center>$VALOR</td>    <td align=center>$QTD</td>    <td align=center>$TICKET</td>  </tr></table><hr>]]></value-expression>
+        </simple-value>
+      </container>
+      <container orientacao="V" tamanhoRelativo="655">
+        <geochart id="gch_puheu2">
+          <expression type="sql" data-source="MGEDS"><![CDATA[    SELECT    UFS.UF,    SUM(CAB.VLRNOTA) AS VALOR    FROM TGFCAB CAB    , TGFPAR PAR    , TSICID CID    , TSIUFS UFS    , TSIPAI PAI    , TGFTOP TPO    , TGFNAT NAT    , TSICUS CUS    , TGFVEN VEN    WHERE TPO.GOLSINAL= -1    AND CAB.DTNEG BETWEEN :PERIODO.INI AND :PERIODO.FIN    AND CAB.CODNAT = NAT.CODNAT    AND CAB.CODVEND = VEN.CODVEND    AND CAB.CODCENCUS = CUS.CODCENCUS    AND CAB.CODPARC = PAR.CODPARC    AND CAB.CODTIPOPER = TPO.CODTIPOPER    AND CAB.DHTIPOPER = TPO.DHALTER    AND PAR.CODCID = CID.CODCID    AND CID.UF = UFS.CODUF    AND UFS.CODPAIS = PAI.CODPAIS    GROUP BY UFS.UF]]></expression>
+          <metadata>
+            <field name="UF" label="Estado" type="S" visible="true" useFooter="false"/>
+            <field name="VALOR" label="Valor" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+          </metadata>
+          <country>BR</country>
+          <legend show="false" colors="#00A300"/>
+          <region-marker>
+            <name>$UF</name>
+            <value>$VALOR</value>
+          </region-marker>
+        </geochart>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_qy9t78" description="Gráfico de bolha">
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="100">
+        <simple-value id="svl_qy9t79">
+          <value-expression><![CDATA[<center> $IMG]]></value-expression>
+        </simple-value>
+      </container>
+      <container orientacao="V" tamanhoRelativo="508">
+        <chart id="cht_qy9t8a" type="bubble">
+          <expression type="sql" data-source="MGEDS"><![CDATA[SELECTSUM(CAB.VLRNOTA) AS VALOR,SUM(CAB.VLRNOTA)*0.5 AS VALOR2,COUNT(DISTINCT CAB.CODPARC) AS QTDPAR,COUNT(DISTINCT CAB.CODPARC)*1.2 AS QTDPAR2,SUM(CAB.VLRNOTA)/COUNT(DISTINCT CAB.CODPARC) AS TICKET,TO_CHAR(CAB.DTNEG,'MM') AS ANOFROM TGFCAB CABWHERE CAB.DTNEG BETWEEN :PERIODO.INI AND :PERIODO.FIN  AND CAB.TIPMOV = 'P'  AND CAB.STATUSNOTA = 'L'GROUP BY TO_CHAR(CAB.DTNEG,'MM')ORDER BY ANO ]]></expression>
+          <metadata>
+            <field name="VALOR" label="Faturamento" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+            <field name="VALOR2" label="Faturamento" type="I" visible="true" useFooter="false"/>
+            <field name="QTDPAR" label="Quantidade de Clientes" type="I" visible="true" useFooter="false" mask="#.##0"/>
+            <field name="QTDPAR2" label="Quantidade de Clientes" type="I" visible="true" useFooter="false"/>
+            <field name="TICKET" label="Ticket Médio" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+            <field name="ANO" label="Referência" type="S" visible="true" useFooter="false"/>
+          </metadata>
+          <horizontal-axis>
+            <linear resultRotation="0">
+              <mask/>
+              <title>Mês</title>
+            </linear>
+          </horizontal-axis>
+          <vertical-axis>
+            <linear resultRotation="0">
+              <mask/>
+              <title>Faturamento</title>
+            </linear>
+          </vertical-axis>
+          <series>
+            <serie type="bubble">
+              <xField>$ANO</xField>
+              <yField>$VALOR</yField>
+              <zField>$QTDPAR</zField>
+              <display><![CDATA[Desempenho anual]]></display>
+              <color>0x669900</color>
+            </serie>
+            <serie type="bubble">
+              <xField>$ANO</xField>
+              <yField>$VALOR2</yField>
+              <zField>$QTDPAR2</zField>
+              <display><![CDATA[Desempenho anual]]></display>
+              <color>0xff9900</color>
+            </serie>
+          </series>
+        </chart>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_qy9ui6" description="TreeMaps">
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="100">
+        <simple-value id="svl_qy9ui7">
+          <value-expression><![CDATA[<center> $IMG]]></value-expression>
+        </simple-value>
+      </container>
+      <container orientacao="V" tamanhoRelativo="449">
+        <tree-map id="tre_qy9ui8" exibirValor="true" layoutAlgorithm="squarified" layoutLevelAlgorithm="sliceAndDice">
+          <expression type="sql" data-source="MGEDS"><![CDATA[    SELECT    UFS.UF,    CID.NOMECID,    SUM(CAB.VLRNOTA) AS VALOR    FROM TGFCAB CAB    , TGFPAR PAR    , TSICID CID    , TSIUFS UFS    , TGFTOP TPO    WHERE TPO.GOLSINAL= -1    AND CAB.DTNEG BETWEEN :PERIODO.INI AND :PERIODO.FIN    AND CAB.CODPARC = PAR.CODPARC    AND CAB.CODTIPOPER = TPO.CODTIPOPER    AND CAB.DHTIPOPER = TPO.DHALTER    AND PAR.CODCID = CID.CODCID    AND CID.UF = UFS.CODUF    GROUP BY UFS.UF, CID.NOMECID]]></expression>
+          <metadata>
+            <field name="UF" label="Estado" type="S" visible="true" useFooter="false"/>
+            <field name="NOMECID" label="Cidade" type="S" visible="true" useFooter="false"/>
+            <field name="VALOR" label="Valor" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+          </metadata>
+          <categories>
+            <category>
+              <idField>MG</idField>
+              <description>Minas gerais</description>
+              <parent>$UF</parent>
+              <label>$NOMECID</label>
+              <value>$VALOR</value>
+              <color>0x4caf50</color>
+            </category>
+            <category>
+              <idField>SP</idField>
+              <description>São Paulo</description>
+              <parent>$UF</parent>
+              <label>$NOMECID</label>
+              <value>$VALOR</value>
+              <color>0x2196f3</color>
+            </category>
+            <category>
+              <idField>GO</idField>
+              <description>Goiás</description>
+              <parent>$UF</parent>
+              <label>$NOMECID</label>
+              <value>$VALOR</value>
+              <color>0xf44336</color>
+            </category>
+          </categories>
+        </tree-map>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_qy9us2" description="Geomapa">
+    <container orientacao="H" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="288">
+        <geomap id="map_qy9ut0">
+          <expression type="sql" data-source="MGEDS"><![CDATA[SELECT'Parceiro - '||PAR.CODPARC AS NOMEPARC,PAR.LATITUDE,PAR.LONGITUDE,CASE WHEN PAR.AD_SEG_PRINC IN ('A','I') THEN 1 ELSE 2 END AS CORFROM TGFPAR PARWHERE PAR.LATITUDE IS NOT NULLAND PAR.AD_SEG_PRINC IS NOT NULLAND (PAR.CODCID = :CIDADE OR :CIDADE IS NULL)]]></expression>
+          <metadata>
+            <field name="NOMEPARC" label="NOMEPARC" type="S" visible="true" useFooter="false"/>
+            <field name="LATITUDE" label="LATITUDE" type="S" visible="true" useFooter="false"/>
+            <field name="LONGITUDE" label="LONGITUDE" type="S" visible="true" useFooter="false"/>
+            <field name="COR" label="COR" type="I" visible="true" useFooter="false"/>
+          </metadata>
+          <initial>
+            <zoom-ini>5</zoom-ini>
+          </initial>
+          <marker>
+            <value>$COR</value>
+            <name>$NOMEPARC</name>
+            <latitude>$LATITUDE</latitude>
+            <longitude>$LONGITUDE</longitude>
+            <info>
+              <title-info><![CDATA[<center> Informações do cliente]]></title-info>
+              <text-info><![CDATA[<center> Cliente: 123123 - Parceiro LTDA. <br> Perfil: Industria <br> CNPJ: 83835452000110 <br> Cidade: Uberlândia - MG <br> <br><table border = 1px>    <tr>        <td colspan="2" bgcolor = "#8a9eb2" align=center><span style='color: #FFFFFF;'> Resumo comercial</span></td>    </tr>    <tr>        <td bgcolor = "#d7eaff" align=center>&nbsp Faturamento Total&nbsp</td>        <td bgcolor = "#b8c4d0" align=center>&nbsp R$ 135.564,00 &nbsp</td>    </tr>    <tr>        <td bgcolor = "#d7eaff" align=center>&nbsp Ticket Médio &nbsp</td>        <td bgcolor = "#b8c4d0" align=center>&nbsp R$ 15.640,00 &nbsp</td>    </tr>    <tr>        <td bgcolor = "#d7eaff" align=center>&nbsp Qtd. notas &nbsp</td>        <td bgcolor = "#b8c4d0" align=center>&nbsp 9 &nbsp</td>    </tr>    <tr>        <td bgcolor = "#d7eaff" align=center>&nbsp Prazo Médio &nbsp</td>        <td bgcolor = "#b8c4d0" align=center>&nbsp 35 dias &nbsp</td>    </tr>    <tr>        <td bgcolor = "#d7eaff" align=center>&nbsp Prod. Principal &nbsp</td>        <td bgcolor = "#b8c4d0" align=center>&nbsp Produto x &nbsp</td>    </tr></table>]]></text-info>
+            </info>
+          </marker>
+        </geomap>
+      </container>
+      <container orientacao="V" tamanhoRelativo="100">
+        <simple-value id="svl_qy9ut1">
+          <expression type="sql" data-source="MGEDS"><![CDATA[SELECT 1350/nvl(:CIDADE,1) AS A,       1101/nvl(:CIDADE,1) AS B,        249/nvl(:CIDADE,1) AS C,(1101/nvl(:CIDADE,1))/(1350/nvl(:CIDADE,1)) AS D,25300000/nvl(:CIDADE,1) AS E,22555278/nvl(:CIDADE,1) AS F,6766583/nvl(:CIDADE,1) AS G,1804422/nvl(:CIDADE,1) AS HFROM DUAL]]></expression>
+          <metadata>
+            <field name="A" label="A" type="I" visible="true" useFooter="false" mask="#.##0"/>
+            <field name="B" label="B" type="I" visible="true" useFooter="false" mask="#.##0"/>
+            <field name="C" label="C" type="I" visible="true" useFooter="false" mask="#.##0"/>
+            <field name="D" label="D" type="F" visible="true" useFooter="false" mask="#.##0,00 %"/>
+            <field name="E" label="E" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+            <field name="F" label="F" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+            <field name="G" label="G" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+            <field name="H" label="H" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+          </metadata>
+          <value-expression><![CDATA[<center> $GEO_IMG<span style='font-size: 16px;'><b>Quantidade total de Parceiros</b></span><span style='color: #003366; font-size: 26px;'>$A</span> <span style='font-size: 16px;'><b>Clientes</b></span><span style='color: #669900; font-size: 26px;'>$B</span><span style='font-size: 16px;'><b>Prospects</b></span><span style='color: #FFCC00; font-size: 26px;'>$C</span><span style='font-size: 16px;'><b>Market Share</b></span><span style='color: #003366; font-size: 26px;'>$D</span><span style='font-size: 16px;'><b>Meta</b></span><span style='color: #003366; font-size: 26px;'>$E</span><span style='font-size: 16px;'><b>Total Faturado</b></span><span style='color: #003366; font-size: 26px;'>$F</span><span style='font-size: 16px;'><b>Margem</b></span><span style='color: #003366; font-size: 26px;'>$G</span><span style='font-size: 16px;'><b>Lucro</b></span><span style='color: #003366; font-size: 26px;'>$H</span>]]></value-expression>
+        </simple-value>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_a5xvvio" description="Dispersão">
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="102">
+        <simple-value id="svl_a5xvvrz" tamTexto="18">
+          <value-expression><![CDATA[<center> $IMG <hr> <b>Analíse da Dispersão <span style='color: #33CCCC;'>Peso</span> x <span style='color: #33CCCC;'>Altura</span> entre <span style='color: #0033CC;'>homens</span> e <span style='color: #FF0033;'>mulheres</span>.</b>]]></value-expression>
+        </simple-value>
+      </container>
+      <container orientacao="V" tamanhoRelativo="215">
+        <chart id="cht_a5xvvip" type="scatter">
+          <expression type="sql" data-source="MGEDS"><![CDATA[SELECT VLRNOTA, NUMNOTA, NUMNOTA * 0.90 as nunota2, vlrnota * 0.85 as vlr2 FROM TGFCAB where vlrnota < 200 and nunota < 200 and vlrnota > 50 and nunota > 100 and rownum < 3000]]></expression>
+          <metadata>
+            <field name="VLRNOTA" label="Quilos" type="F" visible="true" useFooter="false"/>
+            <field name="NUMNOTA" label="Metros" type="I" visible="true" useFooter="false"/>
+            <field name="NUNOTA2" label="Metros" type="I" visible="true" useFooter="false"/>
+            <field name="VLR2" label="Quilos" type="I" visible="true" useFooter="false"/>
+          </metadata>
+          <horizontal-axis>
+            <linear resultRotation="0">
+              <mask>R$ #.##0,00</mask>
+              <title>Tamanho</title>
+            </linear>
+          </horizontal-axis>
+          <vertical-axis>
+            <linear resultRotation="0">
+              <mask/>
+              <title>Peso</title>
+            </linear>
+          </vertical-axis>
+          <series>
+            <serie type="scatter">
+              <xField>$NUMNOTA</xField>
+              <yField>$VLRNOTA</yField>
+              <display><![CDATA[Mulher]]></display>
+              <color>0xff0033</color>
+            </serie>
+            <serie type="scatter">
+              <xField>$NUNOTA2</xField>
+              <yField>$VLR2</yField>
+              <display><![CDATA[Homem]]></display>
+            </serie>
+          </series>
+          <legend position="top" direction="v"/>
+        </chart>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_as4daho" description="Radar">
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="115">
+        <simple-value id="svl_hz3694" tamTexto="18">
+          <value-expression><![CDATA[ $IMG <hr><center> <span style='color: #0066CC;'>Despesas por Departamento</span>]]></value-expression>
+        </simple-value>
+      </container>
+      <container orientacao="V" tamanhoRelativo="344">
+        <chart id="cht_as4dahp" type="radar" nroColuna="6">
+          <expression type="sql" data-source="MGEDS"><![CDATA[Select 'Administração' as Departamento,  29000 as Previsto, 14000 as Realizado from dualunion allSelect 'Vendas' as Departamento, 45000 as Previsto, 49000 as Realizado from dualunion allSelect 'TI' as Departamento, 60000 as Previsto, 42000 as Realizado from dualunion allSelect 'Suporte ao Cliente' as Departamento, 35000 as Previsto, 53000 as Realizado from dualunion allSelect 'Desenvolvimento' as Departamento, 50000 as Previsto, 65000 as Realizado from dualunion allSelect 'Marketing' as Departamento, 25000 as Previsto, 50000 as Realizado from dualunion allSelect 'Projetos' as Departamento, 25000 as Previsto, 50000 as Realizado from dualunion allSelect 'Industria' as Departamento, 25000 as Previsto, 50000 as Realizado from dualunion allSelect 'Central' as Departamento, 25000 as Previsto, 50000 as Realizado from dual]]></expression>
+          <metadata>
+            <field name="DEPARTAMENTO" label="Departamento" type="S" visible="true" useFooter="false"/>
+            <field name="PREVISTO" label="Previsto" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+            <field name="REALIZADO" label="Realizado" type="F" visible="true" useFooter="false" mask="R$ #.##0,00"/>
+          </metadata>
+          <horizontal-axis>
+            <linear resultRotation="0">
+              <mask>R$ #.##0,00</mask>
+            </linear>
+          </horizontal-axis>
+          <vertical-axis>
+            <category field="DEPARTAMENTO" rotation="0" dropLabel="false">
+              <initView value="first"/>
+            </category>
+          </vertical-axis>
+          <series>
+            <serie type="area" show-tip="false">
+              <xField>$PREVISTO</xField>
+              <yField>$DEPARTAMENTO</yField>
+              <display><![CDATA[Previsto]]></display>
+              <color>0xff9900</color>
+            </serie>
+            <serie type="area" show-tip="false">
+              <xField>$REALIZADO</xField>
+              <yField>$DEPARTAMENTO</yField>
+              <display><![CDATA[Realizado]]></display>
+              <color>0x669900</color>
+            </serie>
+          </series>
+          <legend position="bottom" direction="h"/>
+        </chart>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_15wfbr" description="FUNIL">
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="156">
+        <simple-value id="svl_h07j4m" tamTexto="18">
+          <value-expression><![CDATA[ $IMG <hr><center> <span style='color: #0066CC;'>Funil de vendas</span>]]></value-expression>
+        </simple-value>
+      </container>
+      <container orientacao="V" tamanhoRelativo="463">
+        <chart id="cht_2kbl93" type="funnel">
+          <args>
+            <arg id="TESTE" type="integer"/>
+          </args>
+          <expression type="sql" data-source="MGEDS"><![CDATA[select       400 as qtde,      'Prospecção' as Categoriafrom dualunion allselect       340 as qtde,      'Levantamento / Diagnóstico' as Categoriafrom dualunion allselect       140 as qtde,      'Apresentação da Solução' as Categoriafrom dualunion allselect       30 as qtde,      'Fechamento Positivado' as Categoriafrom dual]]></expression>
+          <metadata>
+            <field name="QTDE" label="Qtde." type="F" visible="true" useFooter="false" mask="###0"/>
+            <field name="CATEGORIA" label="Categoria" type="S" visible="true" useFooter="false"/>
+          </metadata>
+          <series>
+            <serie type="funnel" valueType="percentage">
+              <field>QTDE</field>
+              <nameField>CATEGORIA</nameField>
+            </serie>
+          </series>
+        </chart>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_ajz78vj" description="Intervalo de área">
+    <container orientacao="V" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="100">
+        <simple-value id="svl_ajz785r">
+          <value-expression><![CDATA[<span style='font-size: 16px;'><div style='text-align: center;'><b>Cenário Ótimista, Pessimista e realizado.</b></div></span><hr>]]></value-expression>
+        </simple-value>
+      </container>
+      <container orientacao="V" tamanhoRelativo="571">
+        <chart id="cht_ajz780m" type="area-range" nroColuna="6">
+          <expression type="sql" data-source="MGEDS"><![CDATA[   SELECT SUM(CAB.VLRNOTA) AS VALOR,          COUNT(CAB.NUNOTA) AS QTD,          SUM(CAB.VLRNOTA)/COUNT(CAB.NUNOTA) AS TICKET,          MAX(CAB.VLRNOTA) AS MAXI,          MIN(CAB.VLRNOTA) AS MINI,          NAT.CODNAT,          NAT.DESCRNAT     FROM TGFCAB CAB          JOIN TGFNAT NAT ON TRUNC(CAB.CODNAT, -2) = NAT.CODNAT    WHERE CAB.DTNEG BETWEEN :PERIODO.INI AND :PERIODO.FIN GROUP BY NAT.CODNAT,          NAT.DESCRNAT ORDER BY 3 DESC]]></expression>
+          <metadata>
+            <field name="VALOR" label="Valor" type="I" visible="true" useFooter="false" mask="#.##0,00"/>
+            <field name="QTD" label="Valor" type="I" visible="true" useFooter="false" mask="#.##0,00"/>
+            <field name="TICKET" label="Valor" type="I" visible="true" useFooter="false" mask="#.##0,00"/>
+            <field name="MAXI" label="Valor" type="I" visible="true" useFooter="false" mask="#.##0,00"/>
+            <field name="MINI" label="Valor" type="I" visible="true" useFooter="false" mask="#.##0,00"/>
+            <field name="CODNAT" label="CODNAT" type="I" visible="true" useFooter="false"/>
+            <field name="DESCRNAT" label="Natureza" type="S" visible="true" useFooter="false"/>
+          </metadata>
+          <horizontal-axis>
+            <category field="DESCRNAT" rotation="45" dropLabel="false">
+              <initView value="first"/>
+            </category>
+          </horizontal-axis>
+          <series>
+            <serie type="area-range">
+              <xField>$DESCRNAT</xField>
+              <yMinField>$MINI</yMinField>
+              <yMaxField>$MAXI</yMaxField>
+              <display><![CDATA[Máximo/Mínimo]]></display>
+              <color>0xcc3300</color>
+            </serie>
+            <serie type="line" circle-intersection="true">
+              <xField>$DESCRNAT</xField>
+              <yField>$TICKET</yField>
+              <display><![CDATA[Tícket Médio]]></display>
+              <color>0x0</color>
+            </serie>
+          </series>
+        </chart>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_zmcolj" description="test">
+    <container orientacao="H" tamanhoRelativo="100">
+      <container orientacao="V" tamanhoRelativo="50">
+        <chart id="cht_zmcoll" type="column" nroColuna="6">
+          <expression type="sql" data-source="MGEDS"><![CDATA[select sum(cab.vlrnota) AS VALOR, ven.apelidofrom tgfcab cab inner join tgfven ven on ven.codvend = cab.codvendwhere dtneg between :PERIODO.INI AND :PERIODO.FINgroup by ven.apelido]]></expression>
+          <metadata>
+            <field name="VALOR" label="VALOR" type="I" visible="true" useFooter="false"/>
+            <field name="APELIDO" label="APELIDO" type="S" visible="true" useFooter="false"/>
+          </metadata>
+          <horizontal-axis>
+            <category field="APELIDO" rotation="0" dropLabel="false">
+              <initView value="first"/>
+            </category>
+          </horizontal-axis>
+          <series>
+            <serie type="column">
+              <xField>$APELIDO</xField>
+              <yField>$VALOR</yField>
+              <display><![CDATA[Valor]]></display>
+              <color>0xff6600</color>
+            </serie>
+          </series>
+        </chart>
+      </container>
+    </container>
+  </level>
+  <level id="lvl_aj25tu9" description="HMTL">
+    <container orientacao="V" tamanhoRelativo="100">
+      <html5component id="html5_aj25tva" entryPoint="JSP_MODELO.jsp"/>
+    </container>
+  </level>
+</gadget>
