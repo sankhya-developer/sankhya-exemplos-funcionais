@@ -1,0 +1,87 @@
+<sk-vbox flex>
+    <sk-hbox gap="5">
+        <span layout flex layout-align="center center"><b>sk-hbox</b>: layout-align="{{$ctrl.getLayoutAlign()}}"</span>
+        <span layout flex layout-align="center center"><b>sk-vbox</b>: layout-align="{{$ctrl.getLayoutAlign()}}"</span>
+    </sk-hbox>
+    <sk-hbox gap="5" flex>
+        <sk-hbox class="fill-size" sk-bg-color="lightblue" sk-border="1px solid #ccc" flex layout-align="{{$ctrl.getLayoutAlign()}}">
+            <div sk-bg-color="primary" class="box">
+                Box1
+            </div>
+            <div sk-bg-color="success" class="box">
+                Box2
+            </div>
+            <div sk-bg-color="info" class="box">
+                Box3
+            </div>
+        </sk-hbox>
+        <sk-vbox class="fill-size" sk-bg-color="lightblue" sk-border="1px solid #ccc" flex layout-align="{{$ctrl.getLayoutAlign()}}">
+            <div sk-bg-color="primary" class="box">
+                Box1
+            </div>
+            <div sk-bg-color="success" class="box">
+                Box2
+            </div>
+            <div sk-bg-color="info" class="box">
+                Box3
+            </div>
+        </sk-vbox>
+    </sk-hbox>
+
+    <sk-hbox layout-padding>
+        <div>
+            <b>Disposição horizontal</b>
+            <sk-radio-input
+                    sk-value="$ctrl.horizontalAxis"
+                    sk-option="start"
+                    sk-name="horAxis">
+                start
+            </sk-radio-input>
+            <sk-radio-input
+                    sk-value="$ctrl.horizontalAxis"
+                    sk-option="center"
+                    sk-name="horAxis">
+                center
+            </sk-radio-input>
+            <sk-radio-input
+                    sk-value="$ctrl.horizontalAxis"
+                    sk-option="end"
+                    sk-name="horAxis">
+                end
+            </sk-radio-input>
+            <sk-radio-input
+                    sk-value="$ctrl.horizontalAxis"
+                    sk-option="space-around"
+                    sk-name="horAxis">
+                space-around
+            </sk-radio-input>
+            <sk-radio-input
+                    sk-value="$ctrl.horizontalAxis"
+                    sk-option="space-between"
+                    sk-name="horAxis">
+                space-between
+            </sk-radio-input>
+        </div>
+        <div>
+            <b>Disposição vertical</b>
+            <sk-radio-input
+                    sk-value="$ctrl.verticalAxis"
+                    sk-option="start"
+                    sk-name="verticalAxis">
+                start
+            </sk-radio-input>
+            <sk-radio-input
+                    sk-value="$ctrl.verticalAxis"
+                    sk-option="center"
+                    sk-name="verticalAxis">
+                center
+            </sk-radio-input>
+            <sk-radio-input
+                    sk-value="$ctrl.verticalAxis"
+                    sk-option="end"
+                    sk-name="verticalAxis">
+                end
+            </sk-radio-input>
+        </div>
+    </sk-hbox>
+</sk-vbox>

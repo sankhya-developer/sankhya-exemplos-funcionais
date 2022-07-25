@@ -1,0 +1,65 @@
+<sk-dataset
+        sk-presentation-field="CAMPOSTR"
+        sk-save-handler="$ctrl.saveHandler(request)"
+        sk-remove-handler="$ctrl.removeHandler(request)"
+        sk-refresh-handler="$ctrl.refreshHandler(request)"
+        sk-dataset-created="$ctrl.onDatasetCreated(dataset)" sk-standalone>
+    <sk-dsfield-md name="CAMPOSTR" description="Campo String"></sk-dsfield-md>
+    <sk-dsfield-md name="CAMPONUM" description="Campo Numerico" user-type="I" group-name="Grupo 1"></sk-dsfield-md>
+</sk-dataset>
+
+<sk-dataset entity-name="Cidade" sk-dataset-created="$ctrl.onDatasetCreated(dataset)">
+    <sk-field pattern="CODCID,NOMECID,UF"></sk-field>
+    <sk-field pattern="CODIBGE,CODPAIS" path="UnidadeFederativa"></sk-field>
+</sk-dataset>
+
+<sk-vbox flex>
+    <sk-hbox flex>
+        <sk-vbox flex sk-border="1px solid #ccc">
+            <sk-double-face-panel sk-dataset="$ctrl.dsStandAlone" flex>
+                <sk-top-bar layout-padding layout-align="space-between center">
+                    <sk-navigator dataset="$ctrl.dsStandAlone"></sk-navigator>
+                    <sk-rows-counter sk-dataset="$ctrl.dsStandAlone"></sk-rows-counter>
+                </sk-top-bar>
+                <sk-face-one>
+                    <sk-simple-form sk-columns="2" flex>
+                        <sk-simple-item sk-label="Campo Texto">
+                            <sk-text-input sk-dataset="$ctrl.dsStandAlone" sk-field-name="CAMPOSTR"></sk-text-input>
+                        </sk-simple-item>
+                        <sk-simple-item sk-label="Campo Numérico">
+                            <sk-number-input sk-dataset="$ctrl.dsStandAlone" sk-field-name="CAMPONUM"></sk-number-input>
+                        </sk-simple-item>
+                    </sk-simple-form>
+                    <span ng-bind="$ctrl.dsStandAlone.getCurrentRowAsObject() | json"></span>
+                </sk-face-one>
+                <sk-face-two>
+                    <sk-datagrid sk-dataset="$ctrl.dsStandAlone" sk-margin="10"></sk-datagrid>
+                </sk-face-two>
+            </sk-double-face-panel>
+        </sk-vbox>
+
+        <sk-vbox flex sk-border="1px solid #ccc">
+            <sk-double-face-panel sk-dataset="$ctrl.dsCidade" flex>
+                <sk-top-bar layout-padding layout-align="space-between center">
+                    <sk-navigator dataset="$ctrl.dsCidade"></sk-navigator>
+                    <sk-rows-counter sk-dataset="$ctrl.dsCidade"></sk-rows-counter>
+                </sk-top-bar>
+                <sk-face-one>
+                    <sk-form sk-dataset="$ctrl.dsCidade" sk-columns="2" white flex>
+                        <sk-form-custom-item sk-field-name="NOMECID" sk-required="true">
+                            <sk-hbox flex layout-align="center center">
+                                <sk-text-area sk-field-name="NOMECID" sk-dataset="$ctrl.dsCidade" sk-custom-item-input flex></sk-text-area>
+                                <sk-help-tip sk-text="Texto"></sk-help-tip>
+                            </sk-hbox>
+                        </sk-form-custom-item>
+                        <sk-form-custom-item sk-field-name="UF" sk-description="UF custom"></sk-form-custom-item>
+                    </sk-form>
+                    <span ng-bind="$ctrl.dsCidade.getCurrentRowAsObject() | json"></span>
+                </sk-face-one>
+                <sk-face-two>
+                    <sk-datagrid sk-dataset="$ctrl.dsCidade" sk-margin="10"></sk-datagrid>
+                </sk-face-two>
+            </sk-double-face-panel>
+        </sk-vbox>
+    </sk-hbox>
+</sk-vbox>

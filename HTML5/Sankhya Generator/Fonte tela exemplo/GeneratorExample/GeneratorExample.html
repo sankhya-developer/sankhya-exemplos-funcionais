@@ -1,0 +1,7 @@
+<sk-application ng-controller="GeneratorExampleController as ctrl" class="GeneratorExample">
+    <sk-dynaform sk-entity-name="Cidade"
+                 sk-custom-tabs-loader="ctrl.customTabsLoader(entityName)" 
+                 sk-dynaform-interceptor="ctrl"
+                 sk-on-dynaform-loaded="ctrl.onDynaformLoaded(dynaform, dataset)">
+    </sk-dynaform>
+</sk-application>

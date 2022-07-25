@@ -1,0 +1,12 @@
+<sk-dynaform sk-entity-name="Cidade"
+             sk-on-dynaform-loaded="$ctrl.onDynaformLoaded(dynaform,dataset)"
+             sk-custom-tabs-loader="$ctrl.customTabsLoader(entityName)"
+             sk-other-options-loader="$ctrl.otherOptionsLoader(dynaform, $dropdownMenu)"
+             sk-form-interceptor="$ctrl"
+             sk-pk-listener flex>
+    <dynaform-cidade>
+        <sk-right-top-bar>
+            <button default ng-click="$ctrl.onClickBtnAdicional()">Botão adicional</button>
+        </sk-right-top-bar>
+    </dynaform-cidade>
+</sk-dynaform>

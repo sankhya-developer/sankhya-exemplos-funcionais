@@ -1,0 +1,15 @@
+Instalação do Sankhya Generator
+
+Pré requisitos:
+- Node Js version 14.19.1
+- Yeoman
+
+Instale o generator-sankhya utilizando npm com os comandos abaixo:
+
+npm install -g yo
+npm install -g generator-sankhya
+Em seguida, gere seu novo projeto: yo sankhya
+
+Após esse procedimento é possível começar a utilizar o Sankhya Generator.
+
+Saiba mais sobre o Sankhya Generator em: https://developer.sankhya.com.br/docs/generator-sankhya 

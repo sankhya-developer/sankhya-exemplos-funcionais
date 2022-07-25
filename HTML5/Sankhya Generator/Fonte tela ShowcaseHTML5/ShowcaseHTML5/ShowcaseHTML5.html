@@ -1,0 +1,33 @@
+<sk-application
+        ng-controller="ShowcaseHTML5Controller as ctrl"
+        layout-padding sk-body-overflow="hidden">
+
+    <sk-tab sk-selected-index="ctrl.tabIndex" sk-on-select="ctrl.onChangeTab" flex>
+        <sk-tab-item label="Info" layout-padding>
+            <h3>Showcase dos componentes HTML5</h3>
+
+            <p>Aqui você encontrará exemplos de utlização dos principais componentes do framework.</p>
+            <p>Mais informações poderão ser encontradas na documentação de cada componente.</p>
+            <p>Tanto a documentação quando esta tela é de responsabilidade de todos, portanto, em caso de erros ou falta
+                de informações,
+                ajuste para que a base de conhecimento possa crescer com qualidade.</p>
+        </sk-tab-item>
+        <sk-tab-item label="Layout" layout-padding layout flex>
+            <layout-showcase layout flex></layout-showcase>
+        </sk-tab-item>
+        <sk-tab-item label="Layout align" layout-padding layout flex>
+            <layout-align-showcase layout flex></layout-align-showcase>
+        </sk-tab-item>
+        <sk-tab-item label="CRUD" layout-padding layout flex>
+            <crud-showcase layout flex></crud-showcase>
+        </sk-tab-item>
+        <sk-tab-item label="Dynaform" layout-padding layout flex>
+            <dynaform-showcase flex></dynaform-showcase>
+        </sk-tab-item>
+        <sk-tab-item label="Dashboard Renderer" layout-padding layout flex>
+            <sk-dashboard-renderer sk-nu-gdg="10" sk-width="850px" sk-height="650px" sk-filter="ctrl.filters"></sk-dashboard-renderer>
+        </sk-tab-item>
+    </sk-tab>
+
+    <span sk-margin="5px" ng-bind="'Aba selecionada:' + ctrl.tabIndex"></span>
+</sk-application>

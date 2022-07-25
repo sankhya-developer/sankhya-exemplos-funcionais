@@ -1,0 +1,9 @@
+<ignored>
+	<script type="text/javascript" src="html5/ShowcaseHTML5/abas/dynaformshowcase/dynaformshowcase.component.js"></script>
+	<script type="text/javascript" src="html5/ShowcaseHTML5/abas/dynaformshowcase/abaadicional.controller.js"></script>
+
+	<script type="text/javascript" src="html5/ShowcaseHTML5/abas/layoutshowcase/layoutshowcase.component.js"></script>
+
+	<script type="text/javascript" src="html5/ShowcaseHTML5/abas/layoutalignshowcase/layoutalignshowcase.component.js"></script>
+	<script type="text/javascript" src="html5/ShowcaseHTML5/abas/crudshowcase/crudshowcase.component.js"></script>
+</ignored>
